@@ -1,0 +1,838 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lilian Njeri · A Museum of Her Life</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Dancing+Script:wght@600;700&family=Jost:wght@300;400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fdf8f4;--surf:#fff;--surf2:#fef3eb;--text:#2d1f1a;--muted:#8b6555;--accent:#c9956c;--blush:#f4c4d1;--border:rgba(201,149,108,.25);--glow:rgba(244,160,181,.2);--card:rgba(255,255,255,.88);--ban:#f4c4d1;--btext:#8b3a50;--polo:#fff}
+.dark{--bg:#0d0810;--surf:#1e1120;--surf2:#150d18;--text:#f5e6d3;--muted:#c9a89b;--blush:rgba(107,45,62,.4);--border:rgba(201,149,108,.22);--glow:rgba(201,149,108,.12);--card:rgba(30,17,32,.9);--ban:rgba(107,45,62,.6);--btext:#c9956c;--polo:#1a0f22}
+body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);transition:background .5s,color .5s;overflow-x:hidden;min-height:100vh}
+@keyframes floatUp{0%{transform:translateY(110vh);opacity:0}5%{opacity:.7}90%{opacity:.4}100%{transform:translateY(-80px) rotate(360deg);opacity:0}}
+@keyframes shimmer{0%{background-position:-300% center}100%{background-position:300% center}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes slideUp{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes scan{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(201,149,108,.15)}50%{box-shadow:0 0 44px rgba(201,149,108,.35)}}
+@keyframes dots{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1);opacity:1}}
+@keyframes pf1{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(-4deg) translateY(-9px)}}
+@keyframes pf2{0%,100%{transform:rotate(6deg) translateY(0)}50%{transform:rotate(6deg) translateY(-7px)}}
+@keyframes pf3{0%,100%{transform:rotate(-1deg) translateY(0)}50%{transform:rotate(-1deg) translateY(-11px)}}
+@keyframes bokeh{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:.9}}
+@keyframes ftReveal{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes adminSlide{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes letterOpen{from{transform:translateY(-16px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+@keyframes checkPop{0%{transform:scale(0) rotate(-30deg)}65%{transform:scale(1.3) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+
+.shimmer{background:linear-gradient(90deg,#c9956c,#f5e6d3 20%,#e8b89a 40%,#f4a0b5 60%,#c9956c 80%,#f5e6d3);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 5s linear infinite}
+.particle{position:fixed;border-radius:50%;pointer-events:none;animation:floatUp linear infinite;z-index:0}
+.rev{opacity:0;transform:translateY(36px);transition:opacity .75s ease,transform .75s ease}.rev.vis{opacity:1;transform:translateY(0)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(253,248,244,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 4%;height:68px;transition:background .5s}
+.dark nav{background:rgba(13,8,16,.92)}
+.lname{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--accent);line-height:1}
+.lsub{font-size:.48rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase;margin-top:2px}
+.nl{display:flex;gap:1.6rem;align-items:center}
+.na{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .3s;font-weight:500;text-decoration:none;font-family:'Jost',sans-serif}.na:hover{color:var(--accent)}
+.btn{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.2em;font-weight:600;text-transform:uppercase;cursor:pointer;transition:all .3s;border:none}
+.btp{background:linear-gradient(135deg,#c9956c,#e8b89a);color:#fff;padding:10px 24px;border-radius:50px;box-shadow:0 6px 24px rgba(201,149,108,.35)}.btp:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(201,149,108,.5)}
+.btg{background:transparent;color:var(--accent);border:1.5px solid var(--accent);padding:9px 22px;border-radius:50px}.btg:hover{background:rgba(201,149,108,.1);transform:translateY(-2px)}
+.tbtn{background:var(--surf);border:1px solid var(--border);border-radius:50px;padding:7px 14px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;gap:5px;color:var(--muted);transition:all .3s}
+.stag{font-size:.65rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+.stit{font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--text);line-height:1.15}
+.div{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--accent),transparent);margin:16px auto}
+.glass{background:var(--card);border:1px solid var(--border);border-radius:20px;backdrop-filter:blur(20px);transition:transform .3s,box-shadow .3s}.glass:hover{transform:translateY(-4px)}
+.tnum{font-family:'Cormorant Garamond',serif;font-size:2.9rem;font-weight:300;color:var(--accent);line-height:1}
+.cnum{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--accent);line-height:1}
+.lt{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.cursor{display:inline-block;animation:blink .7s infinite;color:var(--accent)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+.gg{columns:5;column-gap:9px}.gi{break-inside:avoid;margin-bottom:9px;cursor:pointer;transition:transform .3s}.gi:hover{transform:scale(1.04)}
+.pw{background:var(--polo);padding:8px 8px 28px;box-shadow:0 6px 22px rgba(0,0,0,.12);border-radius:2px;transition:box-shadow .3s}.gi:hover .pw{box-shadow:0 12px 36px rgba(201,149,108,.3)}
+.ms{display:flex;gap:14px;overflow-x:auto;padding-bottom:12px;scrollbar-width:none}.ms::-webkit-scrollbar{display:none}
+.mc{flex:0 0 138px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 12px;text-align:center;backdrop-filter:blur(20px);transition:transform .3s,background .3s,border-color .3s;cursor:pointer}.mc:hover{transform:translateY(-6px)}
+.mi{width:52px;height:52px;border-radius:50%;background:var(--blush);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.3rem}
+.wc{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px 22px;position:relative;transition:transform .3s,box-shadow .3s;backdrop-filter:blur(20px);overflow:hidden}.wc:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,149,108,.15)}
+.wqq{font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--accent);opacity:.18;line-height:.8;position:absolute;top:12px;left:14px}
+.jcard{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;backdrop-filter:blur(20px);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden}.jcard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,149,108,.15)}
+.jcard::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(transparent,transparent 23px,rgba(201,149,108,.07) 24px);pointer-events:none}
+.jcat{font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;padding:4px 12px;border-radius:20px;display:inline-block;margin-bottom:12px;font-weight:600}
+.jtab{padding:8px 20px;border-radius:50px;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:all .3s;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Jost',sans-serif;font-weight:500}.jtab.act{background:var(--accent);color:#fff;border-color:var(--accent)}
+.gcard{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;backdrop-filter:blur(20px);transition:transform .3s,box-shadow .3s,border-color .3s}.gcard:hover{transform:translateY(-4px)}.gcard.done{border-color:rgba(201,149,108,.5)}
+.gprog{height:5px;background:rgba(201,149,108,.15);border-radius:3px;margin:14px 0 10px;overflow:hidden}
+.gbar{height:100%;background:linear-gradient(to right,#c9956c,#f4a0b5);border-radius:3px;transition:width 1.2s ease}
+.env{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:44px 40px;text-align:center;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}.env:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(201,149,108,.2)}
+.seal-btn{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#c9956c,#e8b89a);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:0 4px 20px rgba(201,149,108,.4);cursor:pointer;transition:transform .3s}.seal-btn:hover{transform:scale(1.08)}
+.letter-paper{background:var(--polo);border:1px solid rgba(201,149,108,.2);border-radius:14px;padding:44px;max-width:520px;margin:28px auto 0;position:relative;overflow:hidden;animation:letterOpen .5s ease}
+.letter-paper::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(transparent,transparent 27px,rgba(201,149,108,.08) 28px);pointer-events:none}
+.hero-wrap{min-height:100vh;display:grid;grid-template-columns:1.15fr .85fr;padding-top:68px;position:relative}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:60px 40px 60px 5vw;position:relative;z-index:1}
+.hero-right{position:relative;overflow:hidden;min-height:500px}
+.hero-photo-bg{position:absolute;inset:0;background:linear-gradient(155deg,#fde8d0 0%,#f4c4d1 20%,#e8a0b8 45%,#c9956c 70%,#f0d4c4 85%,#fdf0e8 100%);background-size:cover;background-position:center;transition:background .5s}
+.hero-photo-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 35% 40%,rgba(255,255,255,.25) 0%,transparent 50%),radial-gradient(circle at 75% 75%,rgba(244,160,181,.35) 0%,transparent 45%)}
+.bokeh-dot{position:absolute;border-radius:50%;animation:bokeh ease-in-out infinite}
+.photo-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:75%;aspect-ratio:.72;border:2px dashed rgba(255,255,255,.4);border-radius:8px;display:flex;align-items:center;justify-content:center;z-index:2;transition:opacity .3s}
+.ft-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ft-card{cursor:pointer;perspective:1000px}
+.ft-inner{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:28px 16px;text-align:center;transition:transform .4s cubic-bezier(.175,.885,.32,1.275),box-shadow .4s,border-color .3s,background .3s;transform-style:preserve-3d;position:relative;overflow:hidden}
+.ft-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow),transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none}
+.ft-card:hover .ft-inner{transform:perspective(1000px) rotateX(-5deg) rotateY(4deg) translateY(-6px);box-shadow:0 20px 40px rgba(201,149,108,.22)}
+.ft-card:hover .ft-inner::before{opacity:1}
+.ft-inner.act{border-color:var(--accent);background:rgba(201,149,108,.08);transform:perspective(1000px) translateY(-8px) scale(1.02)!important;box-shadow:0 24px 48px rgba(201,149,108,.35)!important}
+.ft-inner.act::before{opacity:1}
+.ft-icon{width:60px;height:60px;border-radius:50%;background:var(--blush);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.5rem;transition:background .3s}
+.ft-inner.act .ft-icon{background:rgba(201,149,108,.25)}
+.ft-detail-row{grid-column:1/-1;display:none;animation:ftReveal .45s ease}.ft-detail-row.show{display:block}
+.ft-detail-panel{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px;position:relative;overflow:hidden}
+.ft-detail-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow),transparent 55%);pointer-events:none}
+.ft-photo{width:180px;height:220px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;margin:0 auto 16px;position:relative;overflow:hidden;background-size:cover;background-position:center}
+.ft-photo-sm{width:120px;height:130px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;flex-shrink:0;position:relative;overflow:hidden;background-size:cover;background-position:center}
+.ppl-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;flex:0 0 140px;transition:transform .3s}.ppl-card:hover{transform:translateY(-4px)}
+.ppl-av{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:1.5rem;background-size:cover;background-position:center}
+.wish-form-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px;max-width:580px;margin:40px auto 0;position:relative;overflow:hidden}
+.wish-form-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow),transparent 60%);pointer-events:none}
+.fin{width:100%;background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-family:'Jost',sans-serif;font-size:.85rem;outline:none;transition:border-color .3s;margin-bottom:12px;resize:none}.fin:focus{border-color:var(--accent)}
+#lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(14px)}#lb.open{display:flex}
+#lbx{position:absolute;top:18px;right:26px;color:#fff;font-size:2.5rem;cursor:pointer;opacity:.8;line-height:1}
+#lbcap{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:#f5e6d3;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic}
+
+/* ══════════ ADMIN PANEL STYLES ══════════ */
+#adminPanel{display:none;position:fixed;inset:0;z-index:800;background:#0d0810;animation:adminSlide .5s cubic-bezier(.22,1,.36,1)}
+.admin-wrap{display:flex;height:100%;overflow:hidden}
+/* Sidebar */
+.admin-sidebar{width:220px;background:linear-gradient(180deg,#1a0d22 0%,#0d0810 100%);border-right:1px solid rgba(201,149,108,.15);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.admin-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(201,149,108,.12)}
+.admin-nav{flex:1;padding:12px 0}
+.admin-nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;transition:all .25s;border-left:3px solid transparent;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.08em;color:rgba(201,149,108,.55);text-transform:uppercase;font-weight:500}
+.admin-nav-item:hover{background:rgba(201,149,108,.08);color:rgba(201,149,108,.9);border-left-color:rgba(201,149,108,.3)}
+.admin-nav-item.act{background:rgba(201,149,108,.12);color:#c9956c;border-left-color:#c9956c}
+.admin-nav-icon{font-size:1rem;flex-shrink:0;width:20px;text-align:center}
+.admin-nav-badge{background:#c9956c;color:#fff;font-size:.55rem;padding:2px 7px;border-radius:10px;margin-left:auto}
+.admin-footer-nav{padding:12px 0 20px;border-top:1px solid rgba(201,149,108,.12)}
+/* Content */
+.admin-content{flex:1;overflow-y:auto;background:#0f0914;padding:32px}
+.admin-content::-webkit-scrollbar{width:4px}
+.admin-content::-webkit-scrollbar-track{background:transparent}
+.admin-content::-webkit-scrollbar-thumb{background:rgba(201,149,108,.3);border-radius:2px}
+/* Admin cards */
+.a-card{background:rgba(30,17,32,.8);border:1px solid rgba(201,149,108,.15);border-radius:16px;padding:24px;margin-bottom:16px;transition:border-color .3s}
+.a-card:hover{border-color:rgba(201,149,108,.3)}
+.a-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:#f5e6d3;margin-bottom:6px}
+.a-sub{font-size:.7rem;letter-spacing:.15em;color:rgba(201,149,108,.7);text-transform:uppercase;margin-bottom:24px}
+.a-field{width:100%;background:rgba(13,8,16,.8);border:1px solid rgba(201,149,108,.2);border-radius:10px;padding:11px 14px;color:#f5e6d3;font-family:'Jost',sans-serif;font-size:.85rem;outline:none;transition:border-color .3s;margin-bottom:12px;resize:none}
+.a-field:focus{border-color:#c9956c}
+.a-field option{background:#1a0d22;color:#f5e6d3}
+.a-btn{font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.18em;font-weight:600;text-transform:uppercase;cursor:pointer;transition:all .3s;border:none;border-radius:50px}
+.a-btn-primary{background:linear-gradient(135deg,#c9956c,#e8b89a);color:#fff;padding:10px 24px;box-shadow:0 4px 16px rgba(201,149,108,.35)}.a-btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,149,108,.45)}
+.a-btn-ghost{background:transparent;color:#c9956c;border:1.5px solid rgba(201,149,108,.4);padding:9px 20px}.a-btn-ghost:hover{background:rgba(201,149,108,.1);border-color:#c9956c}
+.a-btn-danger{background:rgba(180,60,60,.2);color:#e87d7d;border:1px solid rgba(180,60,60,.3);padding:6px 14px;font-size:.6rem}.a-btn-danger:hover{background:rgba(180,60,60,.35)}
+/* Photo upload button */
+.photo-upload-label{display:inline-flex;align-items:center;gap:8px;background:rgba(201,149,108,.12);border:1.5px dashed rgba(201,149,108,.4);border-radius:12px;padding:12px 20px;cursor:pointer;color:#c9956c;font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;transition:all .3s;font-weight:500}.photo-upload-label:hover{background:rgba(201,149,108,.2);border-color:#c9956c}
+.photo-preview{width:100%;max-height:180px;object-fit:cover;border-radius:10px;margin-top:12px;display:none}
+/* FT tabs in admin */
+.ft-admin-tab{padding:8px 18px;border-radius:50px;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(201,149,108,.2);background:transparent;color:rgba(201,149,108,.5);font-family:'Jost',sans-serif;transition:all .3s}.ft-admin-tab.act{background:#c9956c;color:#fff;border-color:#c9956c}
+/* Stats dashboard */
+.dash-stat{background:rgba(30,17,32,.8);border:1px solid rgba(201,149,108,.15);border-radius:14px;padding:20px;text-align:center}
+.dash-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:#c9956c;line-height:1}
+.dash-label{font-size:.62rem;letter-spacing:.15em;color:rgba(201,149,108,.6);text-transform:uppercase;margin-top:6px}
+/* Item row in admin lists */
+.a-item-row{display:flex;align-items:flex-start;gap:14px;padding:16px;background:rgba(13,8,16,.5);border:1px solid rgba(201,149,108,.1);border-radius:12px;margin-bottom:10px;transition:border-color .3s}.a-item-row:hover{border-color:rgba(201,149,108,.25)}
+.a-divider{height:1px;background:rgba(201,149,108,.12);margin:20px 0}
+
+/* Password modal */
+#adminModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:900;align-items:center;justify-content:center;backdrop-filter:blur(16px)}
+.pwd-box{background:var(--surf);border:1px solid var(--border);border-radius:24px;padding:48px 40px;max-width:400px;width:90%;text-align:center;position:relative}
+
+@media(max-width:700px){
+  .nl{display:none}.gg{columns:2}.sg{grid-template-columns:repeat(2,1fr)!important}
+  .cg{grid-template-columns:repeat(2,1fr)!important}.tg{grid-template-columns:repeat(3,1fr)!important}
+  .ag{grid-template-columns:1fr!important;gap:40px!important}.wg{grid-template-columns:1fr!important}
+  .jgr{grid-template-columns:1fr!important}.ggr{grid-template-columns:1fr!important}
+  .ft-grid{grid-template-columns:repeat(2,1fr)}.hero-wrap{grid-template-columns:1fr}
+  .hero-right{height:55vw;min-height:280px}.hero-left{padding:40px 24px}
+  .admin-sidebar{width:60px}.admin-nav-item span{display:none}.admin-logo .lname,.admin-logo .lsub{display:none}
+  .admin-content{padding:16px}
+}
+
+html{scroll-behavior:smooth}
+::selection{background:rgba(201,149,108,.2);color:#2d1f1a}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,#c9956c,#f4a0b5);border-radius:3px}
+/* PAGE LOADER */
+#loader{position:fixed;inset:0;background:#fdf8f4;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .9s ease,visibility .9s ease}
+.dark #loader{background:#0d0810}
+#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.ldr-crown{font-size:3.5rem;color:#c9956c;margin-bottom:20px;animation:crownSpin 2.5s ease-in-out infinite}
+.ldr-name{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,7vw,5rem);font-weight:300;background:linear-gradient(90deg,#c9956c,#f5e6d3 20%,#e8b89a 40%,#f4a0b5 60%,#c9956c 80%,#f5e6d3);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 2s linear infinite,ldrFade .8s ease .3s both}
+.ldr-sub{font-size:.7rem;letter-spacing:.3em;color:#8b6555;text-transform:uppercase;margin-top:10px;animation:ldrFade .8s ease .8s both}
+.ldr-bar{width:200px;height:2px;background:rgba(201,149,108,.2);border-radius:1px;margin-top:28px;overflow:hidden;animation:ldrFade .5s ease 1s both}
+.ldr-fill{height:100%;background:linear-gradient(to right,#c9956c,#f4a0b5);border-radius:1px;animation:ldrFill 2.2s ease forwards}
+.ldr-dots{display:flex;gap:8px;margin-top:20px;animation:ldrFade .5s ease 1.2s both}
+@keyframes ldrFade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ldrFill{from{width:0}to{width:100%}}
+@keyframes crownSpin{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.1)}}
+/* MOBILE NAV */
+#mobOverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:240;display:none;backdrop-filter:blur(4px)}
+#mobOverlay.show{display:block}
+#mobMenu{position:fixed;top:0;right:-100%;width:82%;max-width:300px;height:100vh;background:var(--surf);z-index:250;transition:right .4s cubic-bezier(.22,1,.36,1);padding:84px 28px 40px;border-left:1px solid var(--border);overflow-y:auto}
+#mobMenu.open{right:0}
+.mob-link{display:block;padding:14px 0;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);cursor:pointer;font-weight:500;font-family:'Jost',sans-serif;border-bottom:1px solid var(--border);transition:color .3s}.mob-link:hover{color:var(--accent)}.mob-link:last-of-type{border-bottom:none}
+.hamburger{display:none;background:transparent;border:1px solid var(--border);border-radius:8px;padding:8px 10px;cursor:pointer;color:var(--muted);flex-direction:column;gap:4px;transition:all .3s;align-items:center}.hamburger:hover{border-color:var(--accent);color:var(--accent)}
+.hbar{width:18px;height:1.5px;background:currentColor;border-radius:1px}
+/* BACK TO TOP */
+#btt{position:fixed;bottom:28px;right:28px;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#c9956c,#e8b89a);color:#fff;font-size:1.1rem;border:none;cursor:pointer;z-index:150;box-shadow:0 4px 18px rgba(201,149,108,.4);opacity:0;transform:translateY(14px);transition:all .35s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1}
+#btt.show{opacity:1;transform:translateY(0)}
+#btt:hover{transform:translateY(-3px)!important;box-shadow:0 8px 28px rgba(201,149,108,.55)}
+@media(max-width:700px){
+  .hamburger{display:flex!important}
+  .nl,.nav-cta{display:none!important}
+  .hero-wrap{grid-template-columns:1fr!important}
+  .hero-right{order:-1;height:70vw!important;min-height:280px}
+  .hero-right::after{content:'';position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(to top,var(--bg),transparent);pointer-events:none}
+  .hero-left{padding:36px 6% 60px!important}
+  .hero-stats{display:none!important}
+  #btt{bottom:18px;right:18px}
+}
+@media(max-width:900px){
+  .hero-wrap{grid-template-columns:1fr}
+  .hero-right{order:-1;height:55vw;min-height:320px}
+}
+
+/* Year in Bloom */
+@keyframes bloomPop{0%{transform:scale(1)}40%{transform:scale(1.5)}100%{transform:scale(1)}}
+@keyframes petalSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes bloomGlow{0%,100%{filter:drop-shadow(0 0 8px rgba(201,149,108,.4))}50%{filter:drop-shadow(0 0 20px rgba(244,160,181,.8))}}
+#bloomIcon{transition:all .6s cubic-bezier(.34,1.56,.64,1)}
+#bloomIcon.pop{animation:bloomPop .6s cubic-bezier(.34,1.56,.64,1)}
+
+/* Admin mobile horizontal tabs */
+#adminMobTabs{display:none;overflow-x:auto;white-space:nowrap;padding:10px 14px;background:#150d18;border-bottom:1px solid rgba(201,149,108,.15);scrollbar-width:none}
+#adminMobTabs::-webkit-scrollbar{display:none}
+.a-mob-tab{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(201,149,108,.2);background:transparent;color:rgba(201,149,108,.5);font-family:'Jost',sans-serif;margin-right:6px;transition:all .25s;white-space:nowrap;flex-shrink:0}
+.a-mob-tab.act{background:#c9956c;color:#fff;border-color:#c9956c}
+@media(max-width:700px){
+  .admin-sidebar{display:none!important}
+  #adminMobTabs{display:block!important}
+  .admin-content{padding:16px!important}
+  .admin-wrap{flex-direction:column}
+}
+
+</style></head><body>
+
+<div id="lb" onclick="closeLB(event)"><span id="lbx" onclick="closeLB()">×</span><div id="lbi"></div><div id="lbcap"></div></div>
+
+<!-- PAGE LOADER -->
+<div id="loader">
+  <div class="ldr-crown">♛</div>
+  <div class="ldr-name">Lilian Njeri</div>
+  <div class="ldr-sub">A Museum of Her Life</div>
+  <div class="ldr-bar"><div class="ldr-fill"></div></div>
+  <div class="ldr-dots">
+    <div class="dot" style="animation:dots 1.3s ease-in-out 0s infinite"></div>
+    <div class="dot" style="animation:dots 1.3s ease-in-out .2s infinite"></div>
+    <div class="dot" style="animation:dots 1.3s ease-in-out .4s infinite"></div>
+  </div>
+</div>
+<!-- MOBILE OVERLAY -->
+<div id="mobOverlay" onclick="closeMob()"></div>
+<!-- MOBILE MENU -->
+<div id="mobMenu">
+  <div style="font-family:'Dancing Script',cursive;font-size:1.4rem;color:var(--accent);margin-bottom:24px">Lilian's Museum ♡</div>
+  <a class="mob-link" onclick="sTo('#home');closeMob()">Home</a>
+  <a class="mob-link" onclick="sTo('#about');closeMob()">About</a>
+  <a class="mob-link" onclick="sTo('#milestones');closeMob()">Milestones</a>
+  <a class="mob-link" onclick="sTo('#gallery');closeMob()">Gallery</a>
+  <a class="mob-link" onclick="sTo('#journal');closeMob()">Journal</a>
+  <a class="mob-link" onclick="sTo('#wishes');closeMob()">Wishes</a>
+  <a class="mob-link" onclick="sTo('#quotes');closeMob()">Verses</a>
+  <div style="margin-top:28px"><button class="btn btp" onclick="sTo('#wishes');closeMob()" style="width:100%;padding:14px;text-align:center">Leave a Wish ♡</button></div>
+</div>
+
+<div id="ptcls"></div>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;gap:10px"><span style="font-size:1.5rem;color:var(--accent)">♛</span><div><div class="lname">Lilian</div><div class="lsub">A Museum of Her Life</div></div></div>
+  <div class="nl" id="navLinks">
+    <a class="na" onclick="sTo('#home')">Home</a><a class="na" onclick="sTo('#about')">About</a>
+    <a class="na" onclick="sTo('#milestones')">Milestones</a><a class="na" onclick="sTo('#gallery')">Gallery</a>
+    <a class="na" onclick="sTo('#journal')">Journal</a><a class="na" onclick="sTo('#wishes')">Wishes</a>
+    <a class="na" onclick="sTo('#quotes')">Verses</a>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button class="tbtn" onclick="toggleDark()" id="tbtn">🌙</button>
+    <button class="btn btp" style="padding:9px 20px" onclick="sTo('#wishes')">Leave a Wish ♡</button>
+  </div>
+    <button class="hamburger" onclick="openMob()" aria-label="Open menu" style="display:none"><div class="hbar"></div><div class="hbar"></div><div class="hbar"></div></button>
+  </nav>
+
+<!-- HERO -->
+<section id="home" class="hero-wrap">
+  <div class="hero-left">
+    <div style="position:absolute;top:0;left:0;width:240px;height:240px;opacity:.07;pointer-events:none;overflow:hidden">
+      <svg viewBox="0 0 200 200" style="width:100%;height:100%;color:var(--accent)" fill="none" stroke="currentColor" stroke-width=".8"><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="60"/><circle cx="100" cy="100" r="40"/><path d="M100 20 Q120 60 100 100 Q80 60 100 20"/><path d="M100 180 Q120 140 100 100 Q80 140 100 180"/><path d="M20 100 Q60 120 100 100 Q60 80 20 100"/><path d="M180 100 Q140 120 100 100 Q140 80 180 100"/></svg>
+    </div>
+    <div style="position:relative;z-index:1">
+      <div style="font-size:.66rem;letter-spacing:.28em;color:var(--accent);text-transform:uppercase;margin-bottom:12px;animation:bob 3s ease-in-out infinite">✦ A Museum of Her Life ✦</div>
+      <div style="font-family:'Dancing Script',cursive;font-size:clamp(1.8rem,3vw,2.8rem);color:var(--muted);font-weight:600;margin-bottom:4px">Celebrating</div>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6.5rem);font-weight:300;line-height:.9;letter-spacing:-.02em;margin-bottom:16px"><span class="shimmer">YEARS &</span><br><span class="shimmer">BEAUTY</span></h1>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.8vw,1.3rem);font-style:italic;color:var(--muted);letter-spacing:.05em;margin-bottom:10px">A Girl. Her Journey. Her Magic.</div>
+      <div style="width:50px;height:1px;background:linear-gradient(to right,var(--accent),transparent);margin:14px 0"></div>
+      <p style="max-width:400px;color:var(--muted);font-size:.9rem;line-height:1.9;margin-bottom:36px;font-weight:300">Here's to the laughter, the lessons, the glow,<br>and the incredible woman you've become.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap"><button class="btn btp" onclick="sTo('#about')">Enter Her Museum ♡</button><button class="btn btg" onclick="sTo('#gallery')">View Gallery</button></div>
+      <div style="margin-top:44px;display:flex;gap:28px;flex-wrap:wrap">
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--accent);line-height:1" id="heroAge">23</div><div style="font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:4px">Years of Life</div></div>
+        <div style="width:1px;background:var(--border)"></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--accent);line-height:1" id="heroDays">—</div><div style="font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:4px">Days Lived</div></div>
+        <div style="width:1px;background:var(--border)"></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--accent);line-height:1">∞</div><div style="font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:4px">Magic Within</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-bg" id="heroBg"></div>
+    <div class="bokeh-dot" style="width:80px;height:80px;background:rgba(255,255,255,.2);top:15%;left:10%;animation-duration:4s"></div>
+    <div class="bokeh-dot" style="width:50px;height:50px;background:rgba(244,160,181,.35);top:65%;left:70%;animation-duration:5s;animation-delay:1s"></div>
+    <div class="bokeh-dot" style="width:100px;height:100px;background:rgba(201,149,108,.18);top:40%;left:50%;animation-duration:6s;animation-delay:.5s"></div>
+    <div class="bokeh-dot" style="width:35px;height:35px;background:rgba(255,255,255,.3);top:80%;left:20%;animation-duration:3.5s;animation-delay:2s"></div>
+    <div class="photo-frame" id="heroFrame"><div style="text-align:center;z-index:3;position:relative"><div style="font-size:3.5rem;margin-bottom:12px;opacity:.6">♛</div><div style="font-family:'Dancing Script',cursive;font-size:1.3rem;color:rgba(255,255,255,.8)">Lilian Njeri</div></div></div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,rgba(201,149,108,.2),transparent);pointer-events:none"></div>
+    <div style="position:absolute;bottom:24px;right:24px;display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.5);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;animation:bob 2.5s ease-in-out infinite"><span>Scroll</span><div style="width:1px;height:32px;background:linear-gradient(to bottom,rgba(255,255,255,.5),transparent)"></div></div>
+  </div>
+</section>
+
+<!-- LIFE TIMER -->
+<section style="padding:80px 5%;background:var(--surf2);position:relative;z-index:1">
+  <div style="max-width:880px;margin:0 auto;text-align:center">
+    <div class="stag rev">✦ Life Counter ✦</div>
+    <h2 class="stit rev" style="font-size:clamp(2rem,5vw,3.4rem);margin-bottom:6px">She Has Been Alive For...</h2>
+    <div class="rev" style="font-family:'Dancing Script',cursive;color:var(--muted);font-size:1.05rem;margin-bottom:44px">Every second, a story. Every minute, a memory.</div>
+    <div class="glass rev" style="padding:44px 36px;position:relative;overflow:hidden;animation:glow 4s ease-in-out infinite">
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow),transparent 60%);pointer-events:none"></div>
+      <div style="font-family:'Dancing Script',cursive;color:var(--accent);font-size:1.1rem;margin-bottom:28px">Born May 31, 2003 · Nairobi, Kenya</div>
+      <div class="tg" id="lg" style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:36px"></div>
+      <div style="display:flex;justify-content:center;gap:36px;flex-wrap:wrap">
+        <div style="text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--text);font-weight:400" id="tdv">—</div><div class="lt">Total Days</div></div>
+        <div style="text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--text);font-weight:400" id="tmv">—</div><div class="lt">Total Minutes</div></div>
+        <div style="text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--text);font-weight:400" id="tsv">—</div><div class="lt">Total Seconds</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HER YEAR IN BLOOM -->
+<section style="padding:80px 5%;position:relative;z-index:1;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 60%,var(--glow),transparent 60%);pointer-events:none"></div>
+  <div style="max-width:580px;margin:0 auto;text-align:center;position:relative;z-index:1">
+    <div class="stag rev">✦ Her Year in Bloom ✦</div>
+    <h2 class="stit rev" id="bloomTitle" style="font-size:clamp(2rem,5vw,3.4rem);margin-bottom:6px">Her 23rd Chapter</h2>
+    <div class="rev" id="bloomSub" style="font-family:'Dancing Script',cursive;color:var(--muted);font-size:1.05rem;margin-bottom:44px">A year of grace, beauty, and becoming.</div>
+
+    <!-- Bloom Ring -->
+    <div class="rev" style="position:relative;width:260px;height:260px;margin:0 auto 36px">
+      <svg width="260" height="260" viewBox="0 0 260 260" style="position:absolute;top:0;left:0;overflow:visible">
+        <defs>
+          <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#c9956c"/>
+            <stop offset="50%" stop-color="#f4a0b5"/>
+            <stop offset="100%" stop-color="#e8b89a"/>
+          </linearGradient>
+          <filter id="rglow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Track ring -->
+        <circle cx="130" cy="130" r="108" fill="none" stroke="rgba(201,149,108,.12)" stroke-width="10" transform="rotate(-90 130 130)"/>
+        <!-- Progress ring -->
+        <circle id="bloomRing" cx="130" cy="130" r="108" fill="none"
+          stroke="url(#rg)" stroke-width="10" stroke-linecap="round"
+          stroke-dasharray="678.58" stroke-dashoffset="678.58"
+          transform="rotate(-90 130 130)"
+          style="transition:stroke-dashoffset 2.8s cubic-bezier(.34,1.2,.64,1)"
+          filter="url(#rglow)"/>
+        <!-- Corner dots -->
+        <circle cx="130" cy="16" r="4" fill="#c9956c" opacity="0.35"/>
+        <circle cx="244" cy="130" r="4" fill="#f4a0b5" opacity="0.35"/>
+        <circle cx="130" cy="244" r="4" fill="#c9956c" opacity="0.35"/>
+        <circle cx="16" cy="130" r="4" fill="#f4a0b5" opacity="0.35"/>
+      </svg>
+      <!-- Center content -->
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:1">
+        <div id="bloomIcon" style="font-size:2.8rem;line-height:1;margin-bottom:8px">🌸</div>
+        <div id="bloomPercent" style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--accent);line-height:1">—</div>
+        <div id="bloomInLabel" style="font-size:.52rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:5px">in bloom</div>
+      </div>
+      <!-- Outer soft glow -->
+      <div style="position:absolute;inset:-12px;border-radius:50%;background:radial-gradient(circle,rgba(201,149,108,.08),transparent 65%);pointer-events:none"></div>
+    </div>
+
+    <!-- Poetic text only — no countdown numbers -->
+    <div class="rev" id="bloomMessage" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--muted);line-height:1.85;max-width:400px;margin:0 auto">
+      "Every year she grows more radiant.<br>Every birthday, a new and beautiful beginning."
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section style="padding:64px 5%;background:var(--surf2);position:relative;z-index:1">
+  <div style="max-width:920px;margin:0 auto;text-align:center">
+    <div class="stag rev">✦ The Journey So Far ✦</div>
+    <div style="width:40px;height:1px;background:var(--accent);margin:0 auto 40px"></div>
+    <div class="sg rev" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px">
+      <div class="glass" style="padding:28px 14px;text-align:center"><div style="width:54px;height:54px;border-radius:50%;background:var(--blush);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.4rem">🎂</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--accent);font-weight:600">23+</div><div style="font-size:.6rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin:4px 0 8px">Years of Life</div><div style="font-size:.78rem;color:var(--muted);line-height:1.7">Countless memories and beautiful moments.</div></div>
+      <div class="glass" style="padding:28px 14px;text-align:center"><div style="width:54px;height:54px;border-radius:50%;background:var(--blush);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.4rem">🌸</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--accent);font-weight:600">Growth</div><div style="font-size:.6rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin:4px 0 8px">&nbsp;</div><div style="font-size:.78rem;color:var(--muted);line-height:1.7">Lessons learned, strength gained, dreams chased.</div></div>
+      <div class="glass" style="padding:28px 14px;text-align:center"><div style="width:54px;height:54px;border-radius:50%;background:var(--blush);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.4rem">✨</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--accent);font-weight:600">Beauty</div><div style="font-size:.6rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin:4px 0 8px">&nbsp;</div><div style="font-size:.78rem;color:var(--muted);line-height:1.7">Inside and out, you shine in your own unique way.</div></div>
+      <div class="glass" style="padding:28px 14px;text-align:center"><div style="width:54px;height:54px;border-radius:50%;background:var(--blush);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.4rem">♛</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--accent);font-weight:600">Future</div><div style="font-size:.6rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin:4px 0 8px">&nbsp;</div><div style="font-size:.78rem;color:var(--muted);line-height:1.7">Endless possibilities and amazing adventures ahead.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BANNER -->
+<section style="padding:70px 5%;background:var(--blush);position:relative;overflow:hidden;z-index:1">
+  <div style="position:absolute;top:-50px;left:-30px;font-size:14rem;opacity:.07;pointer-events:none;color:var(--accent);font-family:'Cormorant Garamond',serif;line-height:1">❝</div>
+  <div style="position:absolute;bottom:-60px;right:-20px;font-size:14rem;opacity:.07;pointer-events:none;color:var(--accent);font-family:'Cormorant Garamond',serif;line-height:1">❞</div>
+  <div style="max-width:680px;margin:0 auto;text-align:center;position:relative;z-index:2">
+    <div class="rev" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,3vw,2.1rem);font-style:italic;color:var(--btext);line-height:1.75;margin-bottom:20px">"It's not just about the years you live,<br>it's about the life you make beautiful."</div>
+    <div class="rev" style="font-size:.65rem;letter-spacing:.25em;color:var(--btext);text-transform:uppercase;opacity:.7">— For Lilian Njeri, with love ♡</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="padding:90px 5%;position:relative;z-index:1">
+  <div class="ag" style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+    <div class="rev">
+      <div class="stag">✦ About This Celebration ✦</div>
+      <h2 class="stit" style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:20px">This day honours<br>her beautiful journey.</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.95;margin-bottom:14px;font-weight:300">A girl who has touched countless lives with her kindness, strength, and smile. Let's celebrate every memory, every lesson, and every dream that shaped her.</p>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.95;margin-bottom:30px;font-weight:300">Celebrating years of grace, strength, and beauty — this is her museum, her story, her light.</p>
+      <div style="font-family:'Dancing Script',cursive;font-size:1.9rem;color:var(--accent)">You are Amazing ♡</div>
+    </div>
+    <div class="rev" style="position:relative;height:360px">
+      <div style="position:absolute;top:55px;right:8px;animation:pf2 5.5s ease-in-out infinite"><div style="background:var(--polo);padding:9px 9px 32px;box-shadow:0 8px 26px rgba(0,0,0,.14);border-radius:2px;width:148px"><div style="width:130px;height:148px;background:linear-gradient(135deg,#fde8d0,#c9956c);border-radius:1px;display:flex;align-items:center;justify-content:center;font-size:2.8rem">🌸</div><div style="font-family:'Dancing Script',cursive;font-size:.75rem;color:#aaa;text-align:center;margin-top:6px">Happy moments</div></div></div>
+      <div style="position:absolute;top:8px;left:14px;animation:pf1 6.5s ease-in-out infinite"><div style="background:var(--polo);padding:9px 9px 32px;box-shadow:0 8px 26px rgba(0,0,0,.13);border-radius:2px;width:152px"><div style="width:134px;height:158px;background:linear-gradient(135deg,#f4c4d1,#e87da0);border-radius:1px;display:flex;align-items:center;justify-content:center;font-size:2.8rem">✨</div><div style="font-family:'Dancing Script',cursive;font-size:.75rem;color:#aaa;text-align:center;margin-top:6px">Her glow</div></div></div>
+      <div style="position:absolute;bottom:4px;left:54px;animation:pf3 5s ease-in-out 1.2s infinite"><div style="background:var(--polo);padding:10px 10px 36px;box-shadow:0 12px 40px rgba(201,149,108,.32);border-radius:2px;width:165px"><div style="width:145px;height:168px;background:linear-gradient(135deg,#fdf8f4,#f4a0b5,#c9956c);border-radius:1px;display:flex;align-items:center;justify-content:center;font-size:3.2rem">👑</div><div style="font-family:'Dancing Script',cursive;font-size:.82rem;color:#aaa;text-align:center;margin-top:8px">Lilian Njeri ♡</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" style="padding:80px 5%;background:var(--surf2);position:relative;z-index:1">
+  <div style="max-width:1100px;margin:0 auto"><div style="text-align:center;margin-bottom:44px"><div class="stag rev">✦ Gallery Moments ✦</div><div class="div"></div></div><div class="gg rev" id="gg"></div></div>
+</section>
+
+<!-- MILESTONES -->
+<section id="milestones" style="padding:80px 5%;position:relative;z-index:1">
+  <div style="max-width:1000px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:14px"><div class="stag rev">✦ Milestones ✦</div><div class="div"></div></div>
+    <div class="ms rev" id="ms"></div>
+    <div id="mdet" style="margin-top:28px;display:none"><div class="glass" style="padding:36px;position:relative;overflow:hidden"><div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow),transparent 60%);pointer-events:none"></div><div id="mdc" style="text-align:center;position:relative;z-index:1"></div></div></div>
+  </div>
+</section>
+
+<!-- HER FAVOURITE THINGS -->
+<section style="padding:90px 5%;background:var(--surf2);position:relative;z-index:1;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 60%,var(--glow),transparent 55%),radial-gradient(circle at 75% 20%,rgba(201,149,108,.08),transparent 50%);pointer-events:none"></div>
+  <div style="max-width:1060px;margin:0 auto;position:relative;z-index:1">
+    <div style="text-align:center;margin-bottom:14px"><div class="stag rev">✦ Her Favourite Things ✦</div><h2 class="stit rev" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:8px">The Things That Make Her, Her</h2><div class="div"></div><p class="rev" style="color:var(--muted);font-size:.9rem;max-width:440px;margin:0 auto 44px;line-height:1.85;font-weight:300">Tap any card to discover the little details that make Lilian uniquely herself.</p></div>
+    <div class="ft-grid rev" id="ftGrid"></div>
+  </div>
+</section>
+
+<!-- WISHES + FORM -->
+<section id="wishes" style="padding:80px 5%;position:relative;z-index:1">
+  <div style="max-width:960px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:44px"><div class="stag rev">✦ Wishes & Messages ✦</div><h2 class="stit rev" style="font-size:clamp(1.8rem,4vw,3rem);margin-bottom:8px">Words from Those Who Love Her</h2><div class="div"></div><p class="rev" style="color:var(--muted);font-size:.9rem;max-width:420px;margin:0 auto;line-height:1.85;font-weight:300">Leave Lilian a message. It appears on her museum wall instantly.</p></div>
+    <div id="wishGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:48px" class="rev"></div>
+    <div class="wish-form-wrap rev">
+      <div style="position:relative;z-index:1">
+        <div style="text-align:center;margin-bottom:28px"><div style="font-family:'Dancing Script',cursive;font-size:1.8rem;color:var(--accent);margin-bottom:6px">Leave Her a Message ♡</div><div style="font-size:.7rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase">Your words will appear on her wall instantly</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><input class="fin" id="wName" placeholder="Your name..." style="margin-bottom:0"><select class="fin" id="wRel" style="margin-bottom:0;cursor:pointer"><option value="">Your relationship to Lilian...</option><option>Best Friend</option><option>Family</option><option>Sister</option><option>Colleague</option><option>Admirer</option><option>Other</option></select></div>
+        <textarea class="fin" id="wMsg" rows="4" placeholder="Write something beautiful for Lilian..." style="margin-top:12px"></textarea>
+        <div style="text-align:center;margin-top:8px"><button class="btn btp" onclick="submitWish()" style="padding:14px 40px">Send My Wish ♡</button></div>
+        <div id="wishSuccess" style="display:none;text-align:center;margin-top:16px;padding:14px;background:rgba(201,149,108,.12);border-radius:12px;border:1px solid var(--border)"><div style="font-family:'Dancing Script',cursive;font-size:1.2rem;color:var(--accent)">Your message has been placed on her wall ♡</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section id="journal" style="padding:90px 5%;background:var(--surf2);position:relative;z-index:1">
+  <div style="max-width:1020px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:14px"><div class="stag rev">✦ Memory Journal ✦</div><h2 class="stit rev" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:8px">Her Memory Vault</h2><div class="div"></div><p class="rev" style="color:var(--muted);font-size:.9rem;max-width:440px;margin:0 auto 36px;line-height:1.85;font-weight:300">Written by Lilian, for Lilian. Every memory, a treasure.</p></div>
+    <div class="rev" id="jtabs" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:36px"></div>
+    <div class="jgr rev" id="jgr" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px"></div>
+  </div>
+</section>
+
+
+<!-- LETTER -->
+<section style="padding:90px 5%;background:var(--surf2);position:relative;z-index:1">
+  <div style="max-width:680px;margin:0 auto;text-align:center">
+    <div class="stag rev">✦ Time Capsule ✦</div><h2 class="stit rev" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:8px">A Letter to Future Lilian</h2><div class="div"></div>
+    <p class="rev" style="color:var(--muted);font-size:.9rem;margin-bottom:40px;line-height:1.85;font-weight:300">Written on her 23rd birthday. To be opened whenever she needs to remember.</p>
+    <div class="env rev glass" id="envCard">
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow),transparent 60%);pointer-events:none"></div>
+      <div class="seal-btn" onclick="toggleLetter()">💌</div>
+      <div style="font-family:'Dancing Script',cursive;font-size:1.6rem;color:var(--accent);margin-bottom:8px">For Future Lilian</div>
+      <div style="font-size:.7rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Sealed with love · May 31, 2026</div>
+      <div id="letterSeal" style="display:inline-block;background:rgba(201,149,108,.15);border:1px solid var(--border);border-radius:50px;padding:8px 24px;font-size:.68rem;letter-spacing:.15em;color:var(--accent);text-transform:uppercase;margin-top:8px;cursor:pointer" onclick="toggleLetter()">Break the Seal & Read ♡</div>
+      <div id="letterContent" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE GENERATOR -->
+<section id="quotes" style="padding:100px 5%;position:relative;z-index:1;overflow:hidden">
+  <div style="position:absolute;top:10%;left:50%;transform:translateX(-50%);width:560px;height:560px;background:radial-gradient(circle,var(--glow),transparent 65%);pointer-events:none;border-radius:50%"></div>
+  <div style="max-width:680px;margin:0 auto;text-align:center;position:relative">
+    <div class="stag rev">✦ Words For Her Soul ✦</div><h2 class="stit rev" style="font-size:clamp(2rem,5vw,3.4rem);margin-bottom:6px">Verses from the Archives</h2>
+    <div class="rev" style="font-family:'Dancing Script',cursive;color:var(--muted);font-size:1.05rem;margin-bottom:44px">Words written for souls like hers, across centuries</div>
+    <div class="glass rev" id="qc" style="min-height:220px;padding:48px 44px;margin-bottom:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden">
+      <div id="sl" style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--accent),transparent);opacity:0;pointer-events:none"></div>
+      <div style="position:absolute;top:14px;left:22px;font-family:'Cormorant Garamond',serif;font-size:5.5rem;color:var(--accent);opacity:.12;line-height:1;pointer-events:none">❝</div>
+      <div style="position:absolute;bottom:14px;right:22px;font-family:'Cormorant Garamond',serif;font-size:5.5rem;color:var(--accent);opacity:.12;line-height:1;pointer-events:none">❞</div>
+      <div id="qd"><div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--muted);line-height:1.9">Press below to receive a verse chosen from<br>the world's greatest poets...</div></div>
+    </div>
+    <button class="btn btp rev" id="gb" onclick="genQ()" style="padding:14px 36px;font-size:.72rem">✦ Generate a Verse for Lilian</button>
+    <div class="rev" style="margin-top:24px;font-size:.72rem;color:var(--muted);letter-spacing:.1em;font-style:italic">Poe · Kafka · Rumi · Angelou · Shire · Neruda · Plath · Woolf · Waheed · Nin · Gibran · Wilde · Oliver · Dickinson</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:var(--ban);padding:44px 5%;text-align:center;position:relative;z-index:1">
+  <div style="font-family:'Dancing Script',cursive;font-size:2rem;color:var(--btext);margin-bottom:8px">Here's to you, today and always.</div>
+  <div style="font-size:.65rem;letter-spacing:.3em;color:var(--btext);text-transform:uppercase;opacity:.8">You are loved. You are enough. You are extraordinary.</div>
+  <div style="margin-top:14px;color:var(--btext);font-size:1.3rem">♡</div>
+  <div style="margin-top:28px;display:flex;justify-content:center;gap:24px;font-size:.6rem;letter-spacing:.1em;color:var(--btext);opacity:.5;text-transform:uppercase;flex-wrap:wrap">
+    <span>© 2026 · Lilian Njeri</span><span>·</span><span>A Museum of Her Life</span><span>·</span>
+    <span id="adminCTA" onclick="openAdmin()" style="cursor:pointer;opacity:.25;transition:opacity .3s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='.25'">✦ My Space</span>
+  </div>
+</footer>
+
+<!-- PASSWORD MODAL -->
+<div id="adminModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:900;align-items:center;justify-content:center;backdrop-filter:blur(16px)">
+  <div class="pwd-box">
+    <button onclick="closePwd()" style="position:absolute;top:16px;right:20px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted)">×</button>
+    <div style="font-size:2rem;margin-bottom:16px">♛</div>
+    <div style="font-family:'Dancing Script',cursive;font-size:1.8rem;color:var(--accent);margin-bottom:8px">Her Private Space</div>
+    <div style="font-size:.7rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:28px">Admin access · Lilian Njeri</div>
+    <input type="password" id="adminPwd" class="fin" placeholder="Enter your password..." style="text-align:center;font-size:1rem;letter-spacing:.2em" onkeydown="if(event.key==='Enter')checkAdmin()">
+    <button class="btn btp" onclick="checkAdmin()" style="margin-top:4px;padding:12px 36px;width:100%">Enter ♡</button>
+    <div id="adminErr" style="display:none;margin-top:12px;font-size:.75rem;color:#e87d7d">Incorrect password. Please try again.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     ADMIN PANEL — LILIAN'S PRIVATE SPACE
+═══════════════════════════════════════ -->
+<div id="adminPanel">
+  <div class="admin-wrap">
+    <!-- SIDEBAR -->
+    <div class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="lname" style="color:#c9956c">Lilian</div>
+        <div class="lsub" style="color:rgba(201,149,108,.5)">Admin Panel</div>
+      </div>
+      <div class="admin-nav">
+        <div class="admin-nav-item act" data-s="dash" onclick="adminNav('dash')"><span class="admin-nav-icon">✦</span><span>Dashboard</span></div>
+        <div class="admin-nav-item" data-s="hero" onclick="adminNav('hero')"><span class="admin-nav-icon">🖼️</span><span>Hero Photo</span></div>
+        <div class="admin-nav-item" data-s="gallery" onclick="adminNav('gallery')"><span class="admin-nav-icon">📸</span><span>Gallery</span></div>
+        <div class="admin-nav-item" data-s="milestones" onclick="adminNav('milestones')"><span class="admin-nav-icon">🏆</span><span>Milestones</span></div>
+        <div class="admin-nav-item" data-s="journal" onclick="adminNav('journal')"><span class="admin-nav-icon">📓</span><span>Journal</span></div>
+        <div class="admin-nav-item" data-s="favthings" onclick="adminNav('favthings')"><span class="admin-nav-icon">🌸</span><span>Fav Things</span></div>
+        <div class="admin-nav-item" data-s="wishes" onclick="adminNav('wishes')"><span class="admin-nav-icon">💌</span><span>Wishes <span class="admin-nav-badge" id="wishBadge">0</span></span></div>
+        <div class="admin-nav-item" data-s="letter" onclick="adminNav('letter')"><span class="admin-nav-icon">✉️</span><span>Letter</span></div>
+      </div>
+      <div class="admin-footer-nav">
+        <div class="admin-nav-item" onclick="closeAdmin()" style="color:rgba(232,125,160,.6)"><span class="admin-nav-icon">✕</span><span>Close Admin</span></div>
+      </div>
+    </div>
+    <!-- CONTENT -->
+    <!-- MOBILE HORIZONTAL TABS -->
+    <div id="adminMobTabs">
+      <button class="a-mob-tab act" data-s="dash" onclick="adminNav('dash')">✦ Dash</button>
+      <button class="a-mob-tab" data-s="hero" onclick="adminNav('hero')">🖼️ Hero</button>
+      <button class="a-mob-tab" data-s="gallery" onclick="adminNav('gallery')">📸 Gallery</button>
+      <button class="a-mob-tab" data-s="milestones" onclick="adminNav('milestones')">🏆 Milestones</button>
+      <button class="a-mob-tab" data-s="journal" onclick="adminNav('journal')">📓 Journal</button>
+      <button class="a-mob-tab" data-s="favthings" onclick="adminNav('favthings')">🌸 Fav Things</button>
+      <button class="a-mob-tab" data-s="wishes" onclick="adminNav('wishes')">💌 Wishes</button>
+      <button class="a-mob-tab" data-s="letter" onclick="adminNav('letter')">✉️ Letter</button>
+      <button class="a-mob-tab" onclick="closeAdmin()" style="color:rgba(232,125,160,.5);border-color:rgba(232,125,160,.25)">✕ Close</button>
+    </div>
+    <div class="admin-content" id="adminContent"></div>
+  </div>
+</div>
+
+<script>
+const BIRTH=new Date(2003,4,31);
+const QQ=[{t:"We loved with a love that was more than love.",a:"Edgar Allan Poe"},{t:"All that we see or seem is but a dream within a dream.",a:"Edgar Allan Poe"},{t:"Don't bend; don't water it down; don't edit your own soul.",a:"Franz Kafka"},{t:"Start with what is right rather than what is acceptable.",a:"Franz Kafka"},{t:"A book must be the axe for the frozen sea within us.",a:"Franz Kafka"},{t:"Out beyond ideas of wrongdoing and rightdoing, there is a field. I'll meet you there.",a:"Rumi"},{t:"The wound is the place where the Light enters you.",a:"Rumi"},{t:"What you seek is seeking you.",a:"Rumi"},{t:"You were born with wings, why prefer to crawl through life?",a:"Rumi"},{t:"You alone are enough. You have nothing to prove to anybody.",a:"Maya Angelou"},{t:"There is no greater agony than bearing an untold story inside you.",a:"Maya Angelou"},{t:"I have my mother's mouth and my father's eyes; on my face they are still together.",a:"Warsan Shire"},{t:"Later that night I held an atlas in my lap and whispered: where does it hurt? It answered: everywhere, everywhere, everywhere.",a:"Warsan Shire"},{t:"Give your daughters difficult names. Give your daughters names that command the full use of tongue.",a:"Warsan Shire"},{t:"I am mine. Before I am ever anyone else's.",a:"Nayyirah Waheed"},{t:"And I said to my body softly, 'I want to be your friend.' It took a long breath and replied, 'I have been waiting my whole life for this.'",a:"Nayyirah Waheed"},{t:"I took a deep breath and listened to the old brag of my heart: I am, I am, I am.",a:"Sylvia Plath"},{t:"Let me live, love, and say it well in good sentences.",a:"Sylvia Plath"},{t:"You cannot find peace by avoiding life.",a:"Virginia Woolf"},{t:"Arrange whatever pieces come your way.",a:"Virginia Woolf"},{t:"I want to do with you what spring does with the cherry trees.",a:"Pablo Neruda"},{t:"You can cut all the flowers but you cannot keep spring from coming.",a:"Pablo Neruda"},{t:"I love you without knowing how, or when, or from where.",a:"Pablo Neruda"},{t:"I must be a mermaid. I have no fear of depths and a great fear of shallow living.",a:"Anaïs Nin"},{t:"Life shrinks or expands in proportion to one's courage.",a:"Anaïs Nin"},{t:"Out of suffering have emerged the strongest souls.",a:"Khalil Gibran"},{t:"Be yourself; everyone else is already taken.",a:"Oscar Wilde"},{t:"To live is the rarest thing in the world. Most people exist, that is all.",a:"Oscar Wilde"},{t:"Tell me, what is it you plan to do with your one wild and precious life?",a:"Mary Oliver"},{t:"Keep some room in your heart for the unimaginable.",a:"Mary Oliver"},{t:"Forever is composed of nows.",a:"Emily Dickinson"},{t:"The soul should always stand ajar, ready to welcome the ecstatic experience.",a:"Emily Dickinson"},{t:"Hope is the thing with feathers that perches in the soul.",a:"Emily Dickinson"}];
+
+// ── DATA ──
+let GALL=[{bg:'linear-gradient(135deg,#f4c4d1,#c9956c)',ic:'🌸',cap:'Her smile',h:162,src:null},{bg:'linear-gradient(135deg,#fde8d0,#e87da0)',ic:'✨',cap:'Golden days',h:198,src:null},{bg:'linear-gradient(135deg,#f5e6d3,#c9956c)',ic:'🌹',cap:'In bloom',h:170,src:null},{bg:'linear-gradient(135deg,#fdf8f4,#f4a0b5)',ic:'♡',cap:'Pure joy',h:188,src:null},{bg:'linear-gradient(135deg,#e8c4d8,#9b5874)',ic:'🦋',cap:'Becoming',h:175,src:null},{bg:'linear-gradient(135deg,#fde8d0,#c9956c)',ic:'👑',cap:'Her crown',h:208,src:null},{bg:'linear-gradient(135deg,#f4c4d1,#a04060)',ic:'🌺',cap:'Wild bloom',h:165,src:null},{bg:'linear-gradient(135deg,#f5e6d3,#e8b89a)',ic:'☀️',cap:'Sun-kissed',h:193,src:null},{bg:'linear-gradient(135deg,#fdf0e8,#f4a0b5)',ic:'🌙',cap:'Moonlight',h:178,src:null},{bg:'linear-gradient(135deg,#e8d5c4,#c9956c)',ic:'🌟',cap:'Her star',h:185,src:null}];
+let MIL=[{ic:'🌸',t:'Childhood Dreams',d:'The curious, wide-eyed girl who saw magic everywhere she looked.',y:'2003 – 2009'},{ic:'📚',t:'Growing Stronger',d:'Through every lesson, she grew wiser, kinder, and more herself.',y:'2009 – 2015'},{ic:'💫',t:'Chasing Passions',d:'She discovered what makes her heart sing and ran toward it fearlessly.',y:'2015 – 2019'},{ic:'🌺',t:'Creating Memories',d:'Every laugh, every adventure, every friendship — treasured forever.',y:'2019 – 2022'},{ic:'♛',t:'Becoming Her Best',d:'Today she stands in her full power — radiant, purposeful, deeply loved.',y:'2022 – Now'}];
+let JOURNAL=[{id:1,cat:'happy',date:'May 2020',title:'The day I laughed until I cried',text:'Some days are so perfectly imperfect that you never want them to end. No reason, no occasion — just pure, uncontainable joy.'},{id:2,cat:'lessons',date:'January 2022',title:'What heartbreak taught me',text:'Endings are just beginnings wearing a disguise. The heart that breaks open can hold so much more love than before.'},{id:3,cat:'dreams',date:'December 2023',title:'The life I am building',text:'I close my eyes and see a version of myself so free, so full of light. She is patient with herself. I am walking toward her every day.'},{id:4,cat:'happy',date:'March 2021',title:'A perfect ordinary Tuesday',text:'Nothing extraordinary happened. And yet it was everything. The light came through the window just right. I felt completely alive.'},{id:5,cat:'love',date:'February 2024',title:'A note to those who stayed',text:'You chose me on the hard days, the messy days, the in-between days. You are the reason I believe in people.'},{id:6,cat:'lessons',date:'August 2023',title:'Growth is not always graceful',text:'There were days I fell apart completely. And each time I came back softer, wiser, and more beautifully myself.'}];
+// Goals removed
+// let GOALS=[{id:1,ic:'✈️',cat:'Travel',title:'Visit Santorini',desc:'Watch the sunset over the white-washed rooftops.',prog:0,done:false},{id:2,ic:'💼',cat:'Career',title:'Start my own business',desc:'Build something uniquely and entirely mine.',prog:40,done:false},{id:3,ic:'📚',cat:'Personal',title:'Read 24 books this year',desc:'One book for every beautiful year of life.',prog:70,done:false},{id:4,ic:'🏃',cat:'Health',title:'Run a 5K race',desc:'Lace up, breathe deep, and just go.',prog:100,done:true},{id:5,ic:'🏠',cat:'Dreams',title:'Have my own space',desc:'A home that feels like a warm hug every time.',prog:20,done:false},{id:6,ic:'🌍',cat:'Travel',title:'Go on an African Safari',desc:'Witness the wild beauty of Kenya.',prog:0,done:false}];
+let WISHES=[{name:'A Loving Friend',rel:'Best Friend',msg:'You inspire everyone around you with your kind heart and strength. Happy Birthday, queen.',ts:Date.now()-3600000},{name:'Her Sister',rel:'Sister',msg:'May all your dreams blossom and your future be as beautiful as you are, inside and out.',ts:Date.now()-7200000},{name:'Mama',rel:'Family',msg:'Watching you grow has been the most beautiful journey of all. You are my greatest pride.',ts:Date.now()-10800000}];
+const JCATS={all:{label:'All Memories',bg:'rgba(201,149,108,.15)',color:'var(--accent)'},happy:{label:'😊 Happy',bg:'rgba(244,196,209,.5)',color:'#a04060'},lessons:{label:'💡 Lessons',bg:'rgba(245,230,211,.7)',color:'#8b6555'},dreams:{label:'🌟 Dreams',bg:'rgba(201,149,108,.2)',color:'var(--accent)'},love:{label:'♡ Love',bg:'rgba(244,160,181,.3)',color:'#c94070'},fav:{label:'⭐ Favourite',bg:'rgba(232,184,154,.3)',color:'#8b6030'}};
+const FT_CATS=[{id:'food',icon:'🍽️',label:'Comfort Food',sub:'The meal that feels like home'},{id:'music',icon:'🎵',label:'Her Soundtrack',sub:'The song that is her soul'},{id:'time',icon:'🌅',label:'Time of Day',sub:'Her favourite hour'},{id:'season',icon:'🌸',label:'Favourite Season',sub:'The season she belongs to'},{id:'place',icon:'📍',label:'Favourite Place',sub:'Where she feels most herself'},{id:'people',icon:'💛',label:'Her People',sub:'The ones who hold her heart'},{id:'quote',icon:'📖',label:'Her Quote',sub:'Words she lives by'},{id:'activity',icon:'🌙',label:'Comfort Activity',sub:'What she does for her soul'}];
+let FT_DATA={food:{src:null,title:'',caption:''},music:{song:'',artist:'',note:'',ytUrl:''},time:{src:null,title:'',caption:''},season:{src:null,caption:''},place:{src:null,name:'',meaning:''},people:[],quote:{text:'',author:''},activity:{src:null,title:'',caption:''}};
+let LETTER_TEXT=`Dear Lilian,\n\nIf you're reading this, time has carried you somewhere beautiful.\n\nI hope you've danced more than you've worried.\nI hope you've loved freely, and been loved deeply in return.\nI hope you looked in the mirror today and liked what you saw.\n\nThe girl writing this believes in you completely.\nShe has seen the storms you've walked through,\nand she knows the sunshine that was always waiting ahead.\n\nBe gentle with yourself.\nBe brave with your dreams.\nAnd remember — the world is better because you are in it.\n\nWith all the love I have,\nLilian Njeri ♡\n\nMay 31, 2026`;
+let HERO_SRC=null;
+
+let dark=false,qph='idle',lastQ=-1,actM=-1,jFilter='all',letterOpen=false,activeFT=-1,activeFTTab='food';
+
+// ── PARTICLES ──
+Array.from({length:18},(_,i)=>({l:((i*19+7)%97)+'%',s:3+(i%4)*2.5,c:i%3?i%3===1?'#f4a0b5':'#f5e6d3':'#c9956c',dur:9+(i%6)*2,del:(i%8)*1.4})).forEach(p=>{const d=document.createElement('div');d.className='particle';d.style.cssText=`left:${p.l};width:${p.s}px;height:${p.s}px;background:${p.c};animation-duration:${p.dur}s;animation-delay:${p.del}s;opacity:.5`;document.getElementById('ptcls').appendChild(d)});
+
+function sTo(id){document.querySelector(id)?.scrollIntoView({behavior:'smooth'})}
+function pad(n){return String(n).padStart(2,'0')}
+
+// ── PUBLIC BUILDERS ──
+function buildGallery(){document.getElementById('gg').innerHTML=GALL.map((g,i)=>`<div class="gi" onclick="openLB(${i})"><div class="pw"><div style="width:100%;height:${g.h}px;${g.src?`background-image:url('${g.src}');background-size:cover;background-position:center`:`background:${g.bg}`};border-radius:1px;display:flex;align-items:center;justify-content:center;font-size:2.4rem">${g.src?'':g.ic}</div><div style="font-family:'Dancing Script',cursive;font-size:.72rem;color:var(--muted);text-align:center;margin-top:4px">${g.cap}</div></div></div>`).join('')}
+function buildMilestones(){document.getElementById('ms').innerHTML=MIL.map((m,i)=>`<div class="mc" id="mc${i}" onclick="selM(${i})"><div class="mi">${m.ic}</div><div style="font-size:.7rem;letter-spacing:.07em;color:var(--text);font-weight:500;margin-bottom:4px;line-height:1.3">${m.t}</div><div style="font-size:.58rem;color:var(--accent);letter-spacing:.09em">${m.y}</div></div>`).join('')}
+function selM(i){const m=MIL[i];const det=document.getElementById('mdet');if(actM===i){det.style.display='none';actM=-1;document.querySelectorAll('.mc').forEach(c=>{c.style.borderColor='var(--border)';c.style.background='var(--card)'});return}actM=i;document.querySelectorAll('.mc').forEach((c,x)=>{c.style.borderColor=x===i?'var(--accent)':'var(--border)';c.style.background=x===i?'rgba(201,149,108,.12)':'var(--card)'});document.getElementById('mdc').innerHTML=`<div style="font-size:2.5rem;margin-bottom:12px">${m.ic}</div><div style="font-family:'Dancing Script',cursive;font-size:1.6rem;color:var(--accent);margin-bottom:6px">${m.t}</div><div style="font-size:.62rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:16px">${m.y}</div><p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--text);line-height:1.85;max-width:400px;margin:0 auto">${m.d}</p>`;det.style.display='block'}
+function buildFT(){
+  const grid=document.getElementById('ftGrid');
+  grid.innerHTML=FT_CATS.map((c,i)=>`<div class="ft-card" onclick="selectFT(${i})"><div class="ft-inner" id="fti${i}"><div class="ft-icon">${c.icon}</div><div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--text);margin-bottom:4px;line-height:1.3">${c.label}</div><div style="font-size:.62rem;color:var(--muted);letter-spacing:.05em;font-style:italic">${c.sub}</div></div></div>`).join('')+'<div class="ft-detail-row" id="ftDetail"></div>';
+}
+function selectFT(i){
+  const cat=FT_CATS[i];const det=document.getElementById('ftDetail');
+  if(activeFT===i){document.querySelectorAll('.ft-inner').forEach(el=>el.classList.remove('act'));det.classList.remove('show');det.innerHTML='';activeFT=-1;return}
+  activeFT=i;document.querySelectorAll('.ft-inner').forEach((el,x)=>el.classList.toggle('act',x===i));
+  const d=FT_DATA[cat.id];
+  let html='';
+  if(cat.id==='food'||cat.id==='time'||cat.id==='season'||cat.id==='activity'){
+    const bg=d.src?`background-image:url('${d.src}');background-size:cover;background-position:center`:`background:linear-gradient(135deg,#fde8d0,#c9956c)`;
+    html=`<div style="text-align:center;position:relative;z-index:1"><div class="ft-photo" style="${bg}">${d.src?'':cat.icon}</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--text);margin-bottom:8px">${d.title||cat.label}</div><p style="color:var(--muted);font-size:.9rem;font-style:italic;max-width:400px;margin:0 auto;line-height:1.8">${d.caption||'She will add this from her admin panel ♡'}</p></div>`;
+  }else if(cat.id==='music'){
+    html=`<div style="text-align:center;position:relative;z-index:1"><div style="width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,#f4c4d1,#c9956c);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:4rem;box-shadow:0 8px 32px rgba(201,149,108,.3)">🎵</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--text);margin-bottom:4px">${d.song||'Her Go-To Song'}</div><div style="font-size:.7rem;letter-spacing:.15em;color:var(--accent);text-transform:uppercase;margin-bottom:12px">${d.artist||'Artist Name'}</div><p style="color:var(--muted);font-size:.9rem;font-style:italic;max-width:400px;margin:0 auto 20px;line-height:1.8">${d.note||'This song is her whole personality.'}</p>${d.ytUrl?`<div style="max-width:480px;margin:0 auto;border-radius:12px;overflow:hidden"><iframe width="100%" height="220" src="https://www.youtube.com/embed/${getYTId(d.ytUrl)}?rel=0" frameborder="0" allowfullscreen style="border-radius:12px"></iframe></div>`:'<div style="color:var(--muted);font-size:.8rem;font-style:italic">YouTube player will appear here once she adds her song ♡</div>'}</div>`;
+  }else if(cat.id==='place'){
+    const bg=d.src?`background-image:url('${d.src}');background-size:cover;background-position:center`:`background:linear-gradient(135deg,#fde8d0,#c9956c)`;
+    html=`<div style="display:flex;align-items:center;gap:36px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1"><div class="ft-photo" style="${bg}">${d.src?'':'📍'}</div><div style="text-align:left;max-width:320px"><div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--text);margin-bottom:10px">${d.name||'Her Special Place'}</div><p style="color:var(--muted);font-size:.9rem;font-style:italic;line-height:1.85">${d.meaning||'The place that holds pieces of her heart. She will add it from her admin panel ♡'}</p></div></div>`;
+  }else if(cat.id==='people'){
+    const ppl=FT_DATA.people.length?FT_DATA.people.map(p=>`<div class="ppl-card"><div class="ppl-av" style="${p.src?`background-image:url('${p.src}');background-size:cover`:`background:linear-gradient(135deg,#f4c4d1,#c9956c)`}">${p.src?'':'♡'}</div><div style="font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--text);margin-bottom:3px">${p.name}</div><div style="font-size:.6rem;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:6px">${p.rel}</div><div style="font-size:.78rem;color:var(--muted);font-style:italic;line-height:1.5">${p.note}</div></div>`).join(''):'<div style="color:rgba(201,149,108,.6);font-style:italic;font-family:\'Cormorant Garamond\',serif;font-size:1.1rem">She will add her favourite people from her admin panel ♡</div>';
+    html=`<div style="position:relative;z-index:1"><div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--text);text-align:center;margin-bottom:24px">The People Who Hold Her Heart</div><div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">${ppl}</div></div>`;
+  }else if(cat.id==='quote'){
+    html=`<div style="text-align:center;position:relative;z-index:1;max-width:560px;margin:0 auto"><div style="font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--accent);opacity:.2;line-height:.8;margin-bottom:12px">❝</div><div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2.5vw,1.7rem);font-style:italic;color:var(--text);line-height:1.75;margin-bottom:18px">${d.text||'A quote she lives by will appear here — words so perfectly chosen they feel like they were written for her alone.'}</div><div style="font-size:.7rem;letter-spacing:.15em;color:var(--accent);text-transform:uppercase">— ${d.author||'Her Chosen Words'}</div></div>`;
+  }
+  det.innerHTML=`<div class="ft-detail-panel"><div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow),transparent 55%);pointer-events:none"></div><div style="text-align:center;margin-bottom:24px;position:relative;z-index:1"><div style="font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--accent);margin-bottom:4px">${cat.label}</div><div style="width:40px;height:1px;background:var(--accent);margin:0 auto"></div></div>${html}</div>`;
+  det.classList.add('show');
+  setTimeout(()=>det.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+function getYTId(url){const m=url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);return m?m[1]:''}
+function buildWishes(){const wg=document.getElementById('wishGrid');wg.innerHTML=WISHES.map(w=>`<div class="wc" style="animation:ftReveal .4s ease"><div class="wqq">❝</div><div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#f4c4d1,#c9956c);border:2px solid var(--border);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:#fff">${w.name.charAt(0).toUpperCase()}</div><p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--text);line-height:1.8;text-align:center;margin-bottom:14px;position:relative;z-index:1">"${w.msg}"</p><div style="text-align:center;font-size:.62rem;letter-spacing:.15em;color:var(--accent);text-transform:uppercase">— ${w.name}</div><div style="text-align:center;font-size:.58rem;color:var(--muted);margin-top:3px;letter-spacing:.08em">${w.rel}</div></div>`).join('');document.getElementById('wishBadge').textContent=WISHES.length}
+function submitWish(){const n=document.getElementById('wName').value.trim(),r=document.getElementById('wRel').value,m=document.getElementById('wMsg').value.trim();if(!n||!r||!m)return;WISHES.unshift({name:n,rel:r,msg:m,ts:Date.now()});buildWishes();document.getElementById('wName').value='';document.getElementById('wRel').value='';document.getElementById('wMsg').value='';const s=document.getElementById('wishSuccess');s.style.display='block';setTimeout(()=>s.style.display='none',4000);document.getElementById('wishGrid').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function buildJTabs(){document.getElementById('jtabs').innerHTML=Object.entries(JCATS).map(([k,v])=>`<button class="jtab${k===jFilter?' act':''}" onclick="filterJ('${k}')">${v.label}</button>`).join('')}
+function buildJournal(){const f=jFilter==='all'?JOURNAL:JOURNAL.filter(j=>j.cat===jFilter);document.getElementById('jgr').innerHTML=f.map(j=>{const c=JCATS[j.cat]||JCATS.happy;return`<div class="jcard"><div class="jcat" style="background:${c.bg};color:${c.color}">${c.label}</div><div style="font-size:.65rem;letter-spacing:.1em;color:var(--muted);margin-bottom:10px">${j.date}</div><h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--text);margin-bottom:10px;line-height:1.4">${j.title}</h3><p style="font-size:.82rem;color:var(--muted);line-height:1.75;font-weight:300;position:relative;z-index:1">${j.text}</p></div>`}).join('')}
+function filterJ(cat){jFilter=cat;buildJTabs();buildJournal()}
+function toggleLetter(){letterOpen=!letterOpen;const lc=document.getElementById('letterContent'),ls=document.getElementById('letterSeal');if(letterOpen){lc.style.display='block';lc.innerHTML=`<div class="letter-paper"><div style="position:relative;z-index:1"><pre style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);line-height:1.95;font-style:italic;white-space:pre-wrap;text-align:left">${LETTER_TEXT}</pre></div></div>`;ls.textContent='Seal It Again'}else{lc.style.display='none';ls.textContent='Break the Seal & Read ♡'}}
+
+// ── ADMIN PANEL ──
+function openAdmin(){document.getElementById('adminModal').style.display='flex'}
+function closePwd(){document.getElementById('adminModal').style.display='none';document.getElementById('adminPwd').value='';document.getElementById('adminErr').style.display='none'}
+function checkAdmin(){const v=document.getElementById('adminPwd').value;if(v==='lilian2003'){closePwd();document.getElementById('adminPanel').style.display='block';document.body.style.overflow='hidden';adminNav('dash')}else{document.getElementById('adminErr').style.display='block';document.getElementById('adminPwd').value=''}}
+function closeAdmin(){document.getElementById('adminPanel').style.display='none';document.body.style.overflow=''}
+function adminNav(s){document.querySelectorAll('.admin-nav-item').forEach(el=>el.classList.toggle('act',el.dataset.s===s));document.querySelectorAll('.a-mob-tab[data-s]').forEach(el=>el.classList.toggle('act',el.dataset.s===s));renderAdmin(s)}
+
+// ── PHOTO UPLOAD HELPER ──
+function readPhoto(input,cb){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(f)}
+
+// ── ADMIN SECTION RENDERERS ──
+function renderAdmin(s){
+  const ac=document.getElementById('adminContent');
+  const achieved=0;
+  const sections={
+    dash:`<div><div style="font-family:'Dancing Script',cursive;font-size:2rem;color:#c9956c;margin-bottom:4px">Welcome back, Lilian ♡</div><div style="font-size:.7rem;letter-spacing:.15em;color:rgba(201,149,108,.5);text-transform:uppercase;margin-bottom:32px">Your museum awaits — make it yours</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px"><div class="dash-stat"><div class="dash-num">${JOURNAL.length}</div><div class="dash-label">Memories</div></div><div class="dash-stat"><div class="dash-num">${MIL.length}</div><div class="dash-label">Milestones</div></div><div class="dash-stat"><div class="dash-num">${WISHES.length}</div><div class="dash-label">Wishes</div></div><div class="dash-stat"><div class="dash-num">${WISHES.length}</div><div class="dash-label">Wishes Received</div></div></div><div class="a-card"><div class="a-title">Your Museum at a Glance</div><p style="color:rgba(201,149,108,.6);font-size:.88rem;line-height:1.8">Use the sidebar to manage every part of your museum. Add memories, fill in your favourite things, manage wishes from visitors, and keep your dreams updated. This is your space — make it as beautiful as you are.</p></div><div class="a-card" style="margin-top:16px"><div style="font-size:.68rem;letter-spacing:.2em;color:rgba(201,149,108,.5);text-transform:uppercase;margin-bottom:12px">Quick Tips</div><div style="color:rgba(201,149,108,.7);font-size:.82rem;line-height:2">🖼️ Hero Photo — set your main photo first, it's the first thing people see<br>🌸 Favourite Things — fill these in to make the museum truly yours<br>💌 Wishes — visitors can leave you messages, check them here<br>📸 Gallery — add your own photos to replace the placeholders</div></div></div>`,
+    hero:`<div><div class="a-title">🖼️ Hero Photo</div><div class="a-sub">The main photo visitors see when they arrive</div><div class="a-card"><div style="font-size:.68rem;letter-spacing:.15em;color:rgba(201,149,108,.5);text-transform:uppercase;margin-bottom:16px">Current Hero Photo</div><div id="heroPreviewAdmin" style="width:100%;height:200px;border-radius:12px;${HERO_SRC?`background-image:url('${HERO_SRC}');background-size:cover;background-position:center`:'background:linear-gradient(155deg,#fde8d0,#f4c4d1,#c9956c);display:flex;align-items:center;justify-content:center;font-size:3rem'}">${HERO_SRC?'':'♛'}</div><div class="a-divider"></div><label class="photo-upload-label"><span>📸</span><span>Choose Your Photo</span><input type="file" accept="image/*" style="display:none" onchange="uploadHero(this)"></label><div style="margin-top:12px;color:rgba(201,149,108,.5);font-size:.75rem;line-height:1.7">Pick any photo from your phone or computer. It will appear immediately on your landing page. ♡<br>Best size: portrait orientation, at least 800px tall.</div></div></div>`,
+    gallery:`<div><div class="a-title">📸 Gallery</div><div class="a-sub">Manage your gallery photos</div><div class="a-card" style="margin-bottom:16px"><div style="font-size:.68rem;letter-spacing:.15em;color:rgba(201,149,108,.5);text-transform:uppercase;margin-bottom:16px">Add New Photo</div><input class="a-field" id="newGallCap" placeholder="Photo caption (e.g. 'Birthday 2024', 'Nairobi sunsets')..."><label class="photo-upload-label"><span>📸</span><span>Choose Photo</span><input type="file" accept="image/*" style="display:none" onchange="addGalleryPhoto(this)"></label></div><div class="a-card"><div style="font-size:.68rem;letter-spacing:.15em;color:rgba(201,149,108,.5);text-transform:uppercase;margin-bottom:16px">Current Photos (${GALL.length})</div>${GALL.map((g,i)=>`<div class="a-item-row"><div style="width:60px;height:60px;border-radius:8px;flex-shrink:0;${g.src?`background-image:url('${g.src}');background-size:cover;background-position:center`:`background:${g.bg};display:flex;align-items:center;justify-content:center;font-size:1.5rem`}">${g.src?'':g.ic}</div><div style="flex:1"><div style="font-size:.82rem;color:#f5e6d3;margin-bottom:3px">${g.cap}</div><div style="font-size:.65rem;color:rgba(201,149,108,.5)">${g.src?'📸 Real photo':'🎨 Placeholder'}</div></div><button class="a-btn a-btn-danger" onclick="deleteGallItem(${i})">Delete</button></div>`).join('')}</div></div>`,
+    milestones:`<div><div class="a-title">🏆 Milestones</div><div class="a-sub">Your life's most important chapters</div><div class="a-card" style="margin-bottom:16px"><div style="font-size:.68rem;letter-spacing:.15em;color:rgba(201,149,108,.5);text-transform:uppercase;margin-bottom:16px">Add New Milestone</div><div style="display:grid;grid-template-columns:80px 1fr;gap:10px;margin-bottom:10px"><input class="a-field" id="mIcon" placeholder="Icon" style="text-align:center;font-size:1.3rem"><input class="a-field" id="mTitle" placeholder="Milestone title..."></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input class="a-field" id="mYear" placeholder="Year range (e.g. 2020 – 2022)"><input class="a-field" id="mDesc" placeholder="A short description..."></div><button class="a-btn a-btn-primary" onclick="addMilestone()" style="margin-top:4px">Add Milestone ♡</button></div><div class="a-card">${MIL.map((m,i)=>`<div class="a-item-row"><div style="font-size:1.8rem;flex-shrink:0">${m.ic}</div><div style="flex:1"><div style="font-size:.88rem;color:#f5e6d3;margin-bottom:3px">${m.t}</div><div style="font-size:.65rem;color:rgba(201,149,108,.5)">${m.y}</div><div style="font-size:.75rem;color:rgba(201,149,108,.6);margin-top:4px;font-style:italic">${m.d}</div></div><button class="a-btn a-btn-danger" onclick="delMilestone(${i})">Delete</button></div>`).join('')}</div></div>`,
+    journal:`<div><div class="a-title">📓 Journal</div><div class="a-sub">Her private memory vault</div><div class="a-card" style="margin-bottom:16px"><div style="font-size:.68rem;letter-spacing:.15em;color:rgba(201,149,108,.5);text-transform:uppercase;margin-bottom:16px">Add New Memory</div><input class="a-field" id="jTitleA" placeholder="Memory title..."><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><select class="a-field" id="jCatA" style="cursor:pointer"><option value="happy">😊 Happy Memory</option><option value="lessons">💡 Lesson Learned</option><option value="dreams">🌟 Dream</option><option value="love">♡ Love Note</option><option value="fav">⭐ Favourite Day</option></select><input class="a-field" id="jDateA" placeholder="Date (e.g. May 2024)"></div><textarea class="a-field" id="jTextA" rows="4" placeholder="Write freely. Let it flow..."></textarea><button class="a-btn a-btn-primary" onclick="addJournal()">Save Memory ♡</button></div><div class="a-card">${JOURNAL.map((j,i)=>`<div class="a-item-row"><div style="flex:1"><div style="font-size:.88rem;color:#f5e6d3;margin-bottom:3px">${j.title}</div><div style="font-size:.65rem;color:rgba(201,149,108,.5)">${j.date} · ${j.cat}</div><div style="font-size:.75rem;color:rgba(201,149,108,.55);margin-top:4px;font-style:italic">${j.text.substring(0,80)}...</div></div><button class="a-btn a-btn-danger" onclick="delJournal(${i})">Delete</button></div>`).join('')}</div></div>`,
+    favthings:renderFavThingsAdmin(),
+    wishes:`<div><div class="a-title">💌 Wishes Inbox</div><div class="a-sub">${WISHES.length} messages from people who love you</div>${WISHES.map((w,i)=>`<div class="a-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px"><div><div style="font-size:.88rem;color:#f5e6d3;font-weight:500">${w.name}</div><div style="font-size:.65rem;color:rgba(201,149,108,.5)">${w.rel}</div></div><button class="a-btn a-btn-danger" onclick="delWish(${i})">Delete</button></div><p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(245,230,211,.8);line-height:1.7">"${w.msg}"</p></div>`).join('')}</div>`,
+    letter:`<div><div class="a-title">✉️ Letter to Future Self</div><div class="a-sub">Edit your time capsule letter</div><div class="a-card"><div style="font-size:.68rem;letter-spacing:.15em;color:rgba(201,149,108,.5);text-transform:uppercase;margin-bottom:16px">Your Letter</div><textarea class="a-field" id="letterEdit" rows="16" style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;line-height:1.8">${LETTER_TEXT}</textarea><div style="display:flex;gap:12px;margin-top:4px"><button class="a-btn a-btn-primary" onclick="saveLetter()">Save Letter ♡</button><div id="letterSaved" style="display:none;align-items:center;font-size:.75rem;color:#c9956c;gap:6px">✓ Saved!</div></div></div></div>`
+  };
+  ac.innerHTML=sections[s]||sections.dash;
+}
+
+function renderFavThingsAdmin(){
+  const tabs=FT_CATS.map((c,i)=>`<button class="ft-admin-tab${c.id===activeFTTab?' act':''}" onclick="switchFTTab('${c.id}')">${c.icon} ${c.label}</button>`).join('');
+  let form='';
+  const d=FT_DATA[activeFTTab];
+  if(activeFTTab==='music'){
+    form=`<div class="a-card"><input class="a-field" id="ftSong" value="${d.song}" placeholder="Song title..."><input class="a-field" id="ftArtist" value="${d.artist}" placeholder="Artist name..."><input class="a-field" id="ftYt" value="${d.ytUrl}" placeholder="YouTube URL (e.g. https://youtube.com/watch?v=...)"><textarea class="a-field" id="ftNote" rows="3" placeholder="What this song means to her...">${d.note}</textarea><button class="a-btn a-btn-primary" onclick="saveFT()">Save ♡</button></div>`;
+  }else if(activeFTTab==='people'){
+    const plist=FT_DATA.people.map((p,i)=>`<div class="a-item-row"><div style="width:48px;height:48px;border-radius:50%;${p.src?`background-image:url('${p.src}');background-size:cover`:'background:linear-gradient(135deg,#f4c4d1,#c9956c);display:flex;align-items:center;justify-content:center;font-size:1.2rem'};flex-shrink:0">${p.src?'':'♡'}</div><div style="flex:1"><div style="font-size:.85rem;color:#f5e6d3">${p.name}</div><div style="font-size:.65rem;color:rgba(201,149,108,.5)">${p.rel}</div></div><button class="a-btn a-btn-danger" onclick="delPerson(${i})">Remove</button></div>`).join('');
+    form=`<div class="a-card" style="margin-bottom:12px"><div style="font-size:.68rem;letter-spacing:.15em;color:rgba(201,149,108,.5);text-transform:uppercase;margin-bottom:14px">Add a Person</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input class="a-field" id="pName" placeholder="Their name..." style="margin-bottom:0"><input class="a-field" id="pRel" placeholder="Relationship..." style="margin-bottom:0"></div><input class="a-field" id="pNote" placeholder="One line about what they mean to you..." style="margin-top:10px"><label class="photo-upload-label" style="margin-top:4px"><span>📸</span><span>Their Photo</span><input type="file" accept="image/*" style="display:none" onchange="addPersonPhoto(this)"></label><div id="pPhotoPreview" style="display:none;width:60px;height:60px;border-radius:50%;margin-top:10px;background-size:cover"></div><button class="a-btn a-btn-primary" onclick="addPerson()" style="margin-top:12px">Add Person ♡</button></div><div class="a-card">${plist||'<div style="color:rgba(201,149,108,.4);font-style:italic;text-align:center;padding:20px">No people added yet — add the ones who matter most ♡</div>'}</div>`;
+  }else if(activeFTTab==='quote'){
+    form=`<div class="a-card"><textarea class="a-field" id="ftQuote" rows="4" placeholder="The quote that speaks to your soul...">${d.text}</textarea><input class="a-field" id="ftAuthor" value="${d.author}" placeholder="Author name..."><button class="a-btn a-btn-primary" onclick="saveFT()">Save ♡</button></div>`;
+  }else{
+    const bg=d.src?`background-image:url('${d.src}');background-size:cover;background-position:center`:'background:linear-gradient(135deg,#fde8d0,#c9956c)';
+    const cat=FT_CATS.find(c=>c.id===activeFTTab);
+    form=`<div class="a-card"><div style="width:120px;height:140px;border-radius:10px;${bg};display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:16px">${d.src?'':cat?.icon}</div><label class="photo-upload-label" style="margin-bottom:14px"><span>📸</span><span>Upload Photo</span><input type="file" accept="image/*" style="display:none" onchange="uploadFTPhoto(this,'${activeFTTab}')"></label><input class="a-field" id="ftTitle" value="${d.title||''}" placeholder="Title (e.g. 'Mum's Pilau', 'The Nairobi Skyline')..."><textarea class="a-field" id="ftCaption" rows="3" placeholder="A caption — how does this make you feel?">${d.caption||''}</textarea><button class="a-btn a-btn-primary" onclick="saveFT()">Save ♡</button></div>`;
+  }
+  return`<div><div class="a-title">🌸 Her Favourite Things</div><div class="a-sub">Fill in the 8 things that make you, you</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">${tabs}</div>${form}</div>`;
+}
+
+let pendingPersonPhoto=null;
+function switchFTTab(id){activeFTTab=id;renderAdmin('favthings')}
+function uploadFTPhoto(input,id){readPhoto(input,src=>{FT_DATA[id].src=src;if(activeFT>=0&&FT_CATS[activeFT].id===id)selectFT(-1);renderAdmin('favthings')})}
+function addPersonPhoto(input){readPhoto(input,src=>{pendingPersonPhoto=src;const prev=document.getElementById('pPhotoPreview');if(prev){prev.style.display='block';prev.style.backgroundImage=`url('${src}')`}})}
+function addPerson(){const n=document.getElementById('pName')?.value.trim(),r=document.getElementById('pRel')?.value.trim(),note=document.getElementById('pNote')?.value.trim();if(!n||!r)return;FT_DATA.people.push({name:n,rel:r,note:note||'',src:pendingPersonPhoto});pendingPersonPhoto=null;if(activeFT>=0)selectFT(activeFT);renderAdmin('favthings')}
+function delPerson(i){FT_DATA.people.splice(i,1);if(activeFT>=0)selectFT(activeFT);renderAdmin('favthings')}
+function saveFT(){
+  const id=activeFTTab;
+  if(id==='music'){FT_DATA.music.song=document.getElementById('ftSong')?.value||'';FT_DATA.music.artist=document.getElementById('ftArtist')?.value||'';FT_DATA.music.ytUrl=document.getElementById('ftYt')?.value||'';FT_DATA.music.note=document.getElementById('ftNote')?.value||''}
+  else if(id==='quote'){FT_DATA.quote.text=document.getElementById('ftQuote')?.value||'';FT_DATA.quote.author=document.getElementById('ftAuthor')?.value||''}
+  else{if(document.getElementById('ftTitle'))FT_DATA[id].title=document.getElementById('ftTitle').value;if(document.getElementById('ftCaption'))FT_DATA[id].caption=document.getElementById('ftCaption').value}
+  if(activeFT>=0){const ci=FT_CATS.findIndex(c=>c.id===id);if(ci>=0){selectFT(-1);setTimeout(()=>selectFT(ci),100)}}
+  renderAdmin('favthings');showAdminToast('Saved successfully ♡')
+}
+function showAdminToast(msg){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:32px;right:32px;background:linear-gradient(135deg,#c9956c,#e8b89a);color:#fff;padding:14px 24px;border-radius:50px;font-family:Jost,sans-serif;font-size:.75rem;letter-spacing:.15em;z-index:999;box-shadow:0 8px 24px rgba(201,149,108,.5);animation:slideUp .3s ease';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000)}
+function uploadHero(input){readPhoto(input,src=>{HERO_SRC=src;const bg=document.getElementById('heroBg');if(bg){bg.style.backgroundImage=`url('${src}')`;bg.style.backgroundSize='cover';bg.style.backgroundPosition='center'}const fr=document.getElementById('heroFrame');if(fr)fr.style.opacity='0';renderAdmin('hero');showAdminToast('Hero photo updated ♡')})}
+function addGalleryPhoto(input){const cap=document.getElementById('newGallCap')?.value||'My photo';readPhoto(input,src=>{GALL.push({bg:null,ic:'',cap,h:190,src});buildGallery();renderAdmin('gallery');showAdminToast('Photo added to gallery ♡')})}
+function deleteGallItem(i){if(GALL.length<=1)return;GALL.splice(i,1);buildGallery();renderAdmin('gallery')}
+function addMilestone(){const ic=document.getElementById('mIcon')?.value.trim()||'✦',t=document.getElementById('mTitle')?.value.trim(),y=document.getElementById('mYear')?.value.trim(),d=document.getElementById('mDesc')?.value.trim();if(!t)return;MIL.push({ic,t,y:y||'',d:d||''});buildMilestones();renderAdmin('milestones');showAdminToast('Milestone added ♡')}
+function delMilestone(i){MIL.splice(i,1);buildMilestones();renderAdmin('milestones')}
+function addJournal(){const title=document.getElementById('jTitleA')?.value.trim(),text=document.getElementById('jTextA')?.value.trim(),cat=document.getElementById('jCatA')?.value,date=document.getElementById('jDateA')?.value.trim();if(!title||!text)return;JOURNAL.unshift({id:Date.now(),cat,date:date||new Date().toLocaleDateString('en-KE',{month:'long',year:'numeric'}),title,text});buildJournal();renderAdmin('journal');showAdminToast('Memory saved ♡')}
+function delJournal(i){JOURNAL.splice(i,1);buildJournal();renderAdmin('journal')}
+function delWish(i){WISHES.splice(i,1);buildWishes();renderAdmin('wishes')}
+function saveLetter(){const v=document.getElementById('letterEdit')?.value;if(v){LETTER_TEXT=v;const s=document.getElementById('letterSaved');if(s){s.style.display='flex';setTimeout(()=>s.style.display='none',2000)}showAdminToast('Letter saved ♡')}}
+function launchConfetti(){const cols=['#c9956c','#f4a0b5','#f5e6d3','#e87da0','#fde8d0','#f4c4d1'];for(let i=0;i<60;i++)setTimeout(()=>{const p=document.createElement('div');p.style.cssText=`position:fixed;top:-10px;left:${Math.random()*100}%;width:${4+Math.random()*8}px;height:${4+Math.random()*8}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'2px'};pointer-events:none;z-index:9999;animation:confettiFall ${1.5+Math.random()*2}s ease-in forwards`;document.body.appendChild(p);setTimeout(()=>p.remove(),4000)},i*25)}
+
+// LIGHTBOX
+function openLB(i){const g=GALL[i];const lbi=document.getElementById('lbi');if(g.src){lbi.innerHTML=`<img src="${g.src}" style="max-width:80vw;max-height:80vh;border-radius:4px">`}else{lbi.style.cssText=`width:300px;height:360px;background:${g.bg};border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:5rem`;lbi.innerHTML=g.ic}document.getElementById('lbcap').textContent=g.cap;document.getElementById('lb').classList.add('open')}
+function closeLB(e){if(!e||e.target===document.getElementById('lb')||e.target===document.getElementById('lbx'))document.getElementById('lb').classList.remove('open')}
+function toggleDark(){dark=!dark;document.body.classList.toggle('dark',dark);document.getElementById('tbtn').textContent=dark?'☀️':'🌙'}
+
+// TIMERS
+function getLife(){const now=new Date(),diff=now-BIRTH;let yr=now.getFullYear()-BIRTH.getFullYear(),mo=now.getMonth()-BIRTH.getMonth(),dy=now.getDate()-BIRTH.getDate();if(dy<0){mo--;dy+=new Date(now.getFullYear(),now.getMonth(),0).getDate()}if(mo<0){yr--;mo+=12}return{yr,mo,dy,hr:now.getHours(),mi:now.getMinutes(),se:now.getSeconds(),td:Math.floor(diff/86400000),tm:Math.floor(diff/60000),ts:Math.floor(diff/1000)}}
+function getCD(){const now=new Date();let nb=new Date(now.getFullYear(),4,31);if(nb<=now)nb=new Date(now.getFullYear()+1,4,31);const d=nb-now;return{d:Math.floor(d/86400000),h:Math.floor((d%86400000)/3600000),m:Math.floor((d%3600000)/60000),s:Math.floor((d%60000)/1000),nb}}
+function tick(){
+  const L=getLife();
+  document.getElementById('heroAge').textContent=L.yr;document.getElementById('heroDays').textContent=L.td.toLocaleString();
+  document.getElementById('lg').innerHTML=[{v:L.yr,l:'Years'},{v:L.mo,l:'Months'},{v:L.dy,l:'Days'},{v:L.hr,l:'Hours'},{v:L.mi,l:'Minutes'},{v:L.se,l:'Seconds'}].map(x=>`<div style="background:${dark?'rgba(201,149,108,.1)':'rgba(255,255,255,.85)'};border:1px solid var(--border);border-radius:14px;padding:18px 6px;text-align:center"><div class="tnum">${pad(x.v)}</div><div class="lt">${x.l}</div></div>`).join('');
+  document.getElementById('tdv').textContent=L.td.toLocaleString();document.getElementById('tmv').textContent=L.tm.toLocaleString();document.getElementById('tsv').textContent=L.ts.toLocaleString();
+}
+
+// QUOTES
+function genQ(){if(qph!=='idle'&&qph!=='done')return;let i;do{i=Math.floor(Math.random()*QQ.length)}while(i===lastQ&&QQ.length>1);lastQ=i;const q=QQ[i];qph='searching';const gb=document.getElementById('gb');gb.disabled=true;gb.textContent='Finding your verse...';const sl=document.getElementById('sl');sl.style.opacity='1';sl.style.animation='scan 1.2s linear';const poets=['Poe','Kafka','Rumi','Neruda','Angelou','Shire','Plath','Woolf'];document.getElementById('qd').innerHTML=`<div style="text-align:center"><div style="font-size:.7rem;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;animation:pulse 1.2s ease-in-out infinite;margin-bottom:16px">⟳ Searching the poetry archives...</div><div style="display:flex;gap:8px;justify-content:center">${[0,1,2,3,4].map(x=>`<div class="dot" style="animation:dots 1.2s ease-in-out ${x*.18}s infinite"></div>`).join('')}</div></div>`;setTimeout(()=>{qph='curating';document.getElementById('qd').innerHTML=`<div style="text-align:center"><div style="font-size:.7rem;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;animation:pulse 1.2s ease-in-out infinite;margin-bottom:14px">✦ Curating a verse for Lilian Njeri...</div><div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:var(--muted)">Scanning ${poets[Math.floor(Math.random()*poets.length)]}...</div></div>`},1600);setTimeout(()=>{qph='typing';sl.style.opacity='0';sl.style.animation='none';document.getElementById('qd').innerHTML=`<div><p id="qt" style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:var(--text);line-height:1.9;margin-bottom:22px;min-height:80px"></p><div id="qa" style="font-size:.75rem;letter-spacing:.15em;color:var(--accent);text-transform:uppercase;font-family:'Jost',sans-serif;opacity:0">— ${q.a}</div></div>`;let k=0;const iv=setInterval(()=>{k++;const el=document.getElementById('qt');if(!el){clearInterval(iv);return}if(k<=q.t.length){el.innerHTML=q.t.slice(0,k)+'<span class="cursor">|</span>'}else{clearInterval(iv);el.textContent=q.t;qph='done';const at=document.getElementById('qa');if(at){at.style.opacity='1';at.style.animation='slideUp .5s ease'}gb.disabled=false;gb.textContent='✦ Generate Another Verse'}},32)},3100)}
+
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+
+buildGallery();buildMilestones();buildFT();buildWishes();buildJTabs();buildJournal();initBloom();
+tick();setInterval(tick,1000);
+
+// ── LOADER ──
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    var l=document.getElementById('loader');
+    if(l){l.classList.add('hide');setTimeout(function(){l.style.display='none'},950)}
+  },2300);
+});
+// ── BACK TO TOP ──
+window.addEventListener('scroll',function(){
+  var b=document.getElementById('btt');
+  if(b){b.classList.toggle('show',window.scrollY>400)}
+},{passive:true});
+// ── MOBILE NAV ──
+function openMob(){document.getElementById('mobMenu').classList.add('open');document.getElementById('mobOverlay').classList.add('show');document.body.style.overflow='hidden'}
+function closeMob(){document.getElementById('mobMenu').classList.remove('open');document.getElementById('mobOverlay').classList.remove('show');document.body.style.overflow=''}
+// ── SHOW HAMBURGER VIA CSS (ensure inline style overridden) ──
+(function(){
+  var style=document.createElement('style');
+  style.textContent='@media(max-width:700px){.hamburger{display:flex!important}}';
+  document.head.appendChild(style);
+})();
+
+
+// ── YEAR IN BLOOM ──
+var bloomFired=false;
+var bloomCircumference=678.58;
+
+function calcBloom(){
+  var now=new Date();
+  var yr=now.getFullYear();
+  // Birthday this year
+  var bThisYear=new Date(yr,4,31,0,0,0);
+  // If we're past this year's birthday, use next year cycle
+  var bStart,bEnd;
+  if(now>=bThisYear){
+    bStart=bThisYear;
+    bEnd=new Date(yr+1,4,31,0,0,0);
+  } else {
+    bStart=new Date(yr-1,4,31,0,0,0);
+    bEnd=bThisYear;
+  }
+  var total=bEnd-bStart;
+  var elapsed=now-bStart;
+  var progress=Math.min(1,Math.max(0,elapsed/total));
+  var percent=Math.round(progress*100);
+  var currentAge=(now>=bThisYear)?yr-2003:yr-2003-1;
+  var isBday=(now.getMonth()===4&&now.getDate()===31);
+  return{progress,percent,currentAge,isBday,bEnd};
+}
+
+function initBloom(){
+  var info=calcBloom();
+  // Animate ring after short delay
+  setTimeout(function(){
+    var ring=document.getElementById('bloomRing');
+    var pct=document.getElementById('bloomPercent');
+    var title=document.getElementById('bloomTitle');
+    var sub=document.getElementById('bloomSub');
+    var icon=document.getElementById('bloomIcon');
+    var msg=document.getElementById('bloomMessage');
+    var lbl=document.getElementById('bloomInLabel');
+    if(!ring)return;
+    var offset=bloomCircumference*(1-info.progress);
+    ring.style.strokeDashoffset=offset;
+    if(pct)pct.textContent=info.percent+'%';
+    if(title)title.textContent='Her '+info.currentAge+getOrdinal(info.currentAge)+' Chapter';
+    if(info.isBday){
+      if(icon){icon.textContent='🎂';icon.style.animation='bloomGlow 2s ease-in-out infinite'}
+      if(title)title.textContent='Happy Birthday, Lilian! ♡';
+      if(sub){sub.style.fontFamily="'Dancing Script',cursive";sub.textContent='Today the whole world celebrates you.'}
+      if(msg)msg.innerHTML='"On this day, a queen was born.<br>Happy 23rd Birthday, Lilian Njeri. ♡"';
+      if(lbl)lbl.textContent='complete';
+      if(!bloomFired){bloomFired=true;setTimeout(launchConfetti,800)}
+    }
+  },600);
+}
+
+function checkBirthdayMidnight(){
+  var info=calcBloom();
+  if(info.isBday&&!bloomFired){
+    bloomFired=true;
+    var ring=document.getElementById('bloomRing');
+    var icon=document.getElementById('bloomIcon');
+    var title=document.getElementById('bloomTitle');
+    var sub=document.getElementById('bloomSub');
+    var msg=document.getElementById('bloomMessage');
+    if(ring)ring.style.strokeDashoffset='0';
+    if(icon){
+      icon.textContent='🎂';
+      icon.classList.add('pop');
+      icon.style.animation='bloomGlow 2s ease-in-out infinite';
+    }
+    if(title)title.textContent='Happy Birthday, Lilian! ♡';
+    if(sub)sub.textContent='Today the whole world celebrates you.';
+    if(msg)msg.innerHTML='"On this day, a queen was born.<br>Happy 23rd Birthday, Lilian Njeri. ♡"';
+    setTimeout(launchConfetti,400);
+    setTimeout(launchConfetti,1800);
+    setTimeout(launchConfetti,3200);
+  }
+}
+
+function getOrdinal(n){var s=['th','st','nd','rd'];var v=n%100;return s[(v-20)%10]||s[v]||s[0]}
+
+// Check every 45 seconds for midnight birthday
+setInterval(checkBirthdayMidnight,45000);
+
+</script>
+
+<!-- BACK TO TOP -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" title="Back to top">↑</button>
+</body></html>
