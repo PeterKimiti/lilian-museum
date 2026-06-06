@@ -216,10 +216,7 @@ html{scroll-behavior:smooth}
   .admin-wrap{flex-direction:column}
 }
 
-</style>  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-</head><body>
+</style></head><body>
 
 <div id="lb" onclick="closeLB(event)"><span id="lbx" onclick="closeLB()">×</span><div id="lbi"></div><div id="lbcap"></div></div>
 
@@ -568,26 +565,29 @@ html{scroll-behavior:smooth}
 </div>
 
 <script>
-// ── Firebase + Cloudinary Init ──────────────────────────────────
-firebase.initializeApp({
-  apiKey:"AIzaSyAP0QsF0o4YEwnRvMwUfEg-RPNKYAro4WA",
-  authDomain:"lilian-museum.firebaseapp.com",
-  projectId:"lilian-museum",
-  storageBucket:"lilian-museum.firebasestorage.app",
-  messagingSenderId:"783471047688",
-  appId:"1:783471047688:web:f80c819b7f53958a91cdbd"
-});
-const db=firebase.firestore();
-const CLD_CLOUD='dxyxubtqz',CLD_PRESET='lilian_museum';
-async function uploadToCloudinary(file,folder){
-  const fd=new FormData();
-  fd.append('file',file);fd.append('upload_preset',CLD_PRESET);
-  fd.append('folder','lilian-museum/'+(folder||'misc'));
-  const r=await fetch(`https://api.cloudinary.com/v1_1/${CLD_CLOUD}/image/upload`,{method:'POST',body:fd});
-  const d=await r.json();if(d.error)throw new Error(d.error.message);
-  return d.secure_url;
+// ── PHP API Config (Truehost Backend) ─────────────────────────
+const API='https://jiranihubmarket.co.ke/lilian/api/';
+const APWD='lilian2003';
+
+async function api(ep,method,body){
+  const opts={method:method||'GET'};
+  if(body&&!(body instanceof FormData)){
+    opts.headers={'Content-Type':'application/json'};
+    opts.body=JSON.stringify(body);
+  }else if(body instanceof FormData){opts.body=body}
+  const r=await fetch(API+ep,opts);
+  return r.json();
 }
-// ─────────────────────────────────────────────────────────────────
+
+async function uploadPhoto(file,folder){
+  const fd=new FormData();
+  fd.append('photo',file);fd.append('folder',folder||'gallery');fd.append('admin_pwd',APWD);
+  const r=await fetch(API+'upload.php',{method:'POST',body:fd});
+  const d=await r.json();
+  if(!d.success)throw new Error(d.error||'Upload failed');
+  return d.url;
+}
+// ─────────────────────────────────────────────────────────────
 const BIRTH=new Date(2003,4,31);
 const QQ=[{t:"We loved with a love that was more than love.",a:"Edgar Allan Poe"},{t:"All that we see or seem is but a dream within a dream.",a:"Edgar Allan Poe"},{t:"Don't bend; don't water it down; don't edit your own soul.",a:"Franz Kafka"},{t:"Start with what is right rather than what is acceptable.",a:"Franz Kafka"},{t:"A book must be the axe for the frozen sea within us.",a:"Franz Kafka"},{t:"Out beyond ideas of wrongdoing and rightdoing, there is a field. I'll meet you there.",a:"Rumi"},{t:"The wound is the place where the Light enters you.",a:"Rumi"},{t:"What you seek is seeking you.",a:"Rumi"},{t:"You were born with wings, why prefer to crawl through life?",a:"Rumi"},{t:"You alone are enough. You have nothing to prove to anybody.",a:"Maya Angelou"},{t:"There is no greater agony than bearing an untold story inside you.",a:"Maya Angelou"},{t:"I have my mother's mouth and my father's eyes; on my face they are still together.",a:"Warsan Shire"},{t:"Later that night I held an atlas in my lap and whispered: where does it hurt? It answered: everywhere, everywhere, everywhere.",a:"Warsan Shire"},{t:"Give your daughters difficult names. Give your daughters names that command the full use of tongue.",a:"Warsan Shire"},{t:"I am mine. Before I am ever anyone else's.",a:"Nayyirah Waheed"},{t:"And I said to my body softly, 'I want to be your friend.' It took a long breath and replied, 'I have been waiting my whole life for this.'",a:"Nayyirah Waheed"},{t:"I took a deep breath and listened to the old brag of my heart: I am, I am, I am.",a:"Sylvia Plath"},{t:"Let me live, love, and say it well in good sentences.",a:"Sylvia Plath"},{t:"You cannot find peace by avoiding life.",a:"Virginia Woolf"},{t:"Arrange whatever pieces come your way.",a:"Virginia Woolf"},{t:"I want to do with you what spring does with the cherry trees.",a:"Pablo Neruda"},{t:"You can cut all the flowers but you cannot keep spring from coming.",a:"Pablo Neruda"},{t:"I love you without knowing how, or when, or from where.",a:"Pablo Neruda"},{t:"I must be a mermaid. I have no fear of depths and a great fear of shallow living.",a:"Anaïs Nin"},{t:"Life shrinks or expands in proportion to one's courage.",a:"Anaïs Nin"},{t:"Out of suffering have emerged the strongest souls.",a:"Khalil Gibran"},{t:"Be yourself; everyone else is already taken.",a:"Oscar Wilde"},{t:"To live is the rarest thing in the world. Most people exist, that is all.",a:"Oscar Wilde"},{t:"Tell me, what is it you plan to do with your one wild and precious life?",a:"Mary Oliver"},{t:"Keep some room in your heart for the unimaginable.",a:"Mary Oliver"},{t:"Forever is composed of nows.",a:"Emily Dickinson"},{t:"The soul should always stand ajar, ready to welcome the ecstatic experience.",a:"Emily Dickinson"},{t:"Hope is the thing with feathers that perches in the soul.",a:"Emily Dickinson"}];
 
@@ -745,7 +745,8 @@ function genQ(){if(qph!=='idle'&&qph!=='done')return;let i;do{i=Math.floor(Math.
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.08});
 document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
 
-listenWishes();loadAllData();initBloom();
+// Load from Truehost API
+loadAllData();initBloom();
 tick();setInterval(tick,1000);
 
 // ── LOADER ──
@@ -855,51 +856,217 @@ function getOrdinal(n){var s=['th','st','nd','rd'];var v=n%100;return s[(v-20)%1
 setInterval(checkBirthdayMidnight,45000);
 
 
-// ══ FIREBASE OVERRIDES ══════════════════════════════════════════
-function listenWishes(){db.collection('wishes').orderBy('ts','desc').limit(50).onSnapshot(snap=>{WISHES=snap.docs.map(d=>({id:d.id,...d.data()}));buildWishes();const wb=document.getElementById('wishBadge');if(wb)wb.textContent=WISHES.length},e=>console.error(e));}
+// ══ PHP API INTEGRATION ═════════════════════════════════════════
 
-async function submitWish(){const n=document.getElementById('wName').value.trim(),r=document.getElementById('wRel').value,m=document.getElementById('wMsg').value.trim();if(!n||!r||!m)return;try{await db.collection('wishes').add({name:n,rel:r,msg:m,ts:firebase.firestore.FieldValue.serverTimestamp()});document.getElementById('wName').value='';document.getElementById('wRel').value='';document.getElementById('wMsg').value='';const s=document.getElementById('wishSuccess');s.style.display='block';setTimeout(()=>s.style.display='none',4000);}catch(e){showToast('Could not send — try again');console.error(e);}}
-
-async function uploadHero(input){const file=input.files[0];if(!file)return;showToast('Uploading...');try{const url=await uploadToCloudinary(file,'hero');HERO_SRC=url;await db.collection('settings').doc('hero').set({url});const bg=document.getElementById('heroBg');if(bg){bg.style.backgroundImage=`url('${url}')`;bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';}const fr=document.getElementById('heroFrame');if(fr)fr.style.opacity='0';renderAdmin('hero');showToast('Hero photo updated ♡');}catch(e){showToast('Upload failed — try again');console.error(e);}}
-
-async function addGalleryPhoto(input){const cap=document.getElementById('newGallCap')?.value.trim()||'My photo';const file=input.files[0];if(!file)return;showToast('Uploading photo...');try{const url=await uploadToCloudinary(file,'gallery');const ref=await db.collection('gallery').add({src:url,cap,h:190,bg:null,ic:'',createdAt:firebase.firestore.FieldValue.serverTimestamp()});GALL.push({id:ref.id,src:url,cap,h:190,bg:null,ic:''});buildGallery();renderAdmin('gallery');showToast('Photo added ♡');}catch(e){showToast('Upload failed — try again');console.error(e);}}
-
-async function deleteGallItem(i){if(GALL.length<=1)return;const item=GALL[i];if(item?.id){try{await db.collection('gallery').doc(item.id).delete();}catch(e){console.error(e);}}GALL.splice(i,1);buildGallery();renderAdmin('gallery');}
-
-async function addMilestone(){const ic=document.getElementById('mIcon')?.value.trim()||'✦',t=document.getElementById('mTitle')?.value.trim(),y=document.getElementById('mYear')?.value.trim(),d=document.getElementById('mDesc')?.value.trim();if(!t)return;try{const ref=await db.collection('milestones').add({ic,t,y:y||'',d:d||'',order:MIL.length,createdAt:firebase.firestore.FieldValue.serverTimestamp()});MIL.push({id:ref.id,ic,t,y:y||'',d:d||''});buildMilestones();renderAdmin('milestones');showToast('Milestone added ♡');}catch(e){showToast('Could not save — try again');console.error(e);}}
-
-async function delMilestone(i){const item=MIL[i];if(item?.id){try{await db.collection('milestones').doc(item.id).delete();}catch(e){console.error(e);}}MIL.splice(i,1);buildMilestones();renderAdmin('milestones');}
-
-async function addJournal(){const title=document.getElementById('jTitleA')?.value.trim(),text=document.getElementById('jTextA')?.value.trim(),cat=document.getElementById('jCatA')?.value,date=document.getElementById('jDateA')?.value.trim();if(!title||!text)return;const entry={cat,date:date||new Date().toLocaleDateString('en-KE',{month:'long',year:'numeric'}),title,text};try{const ref=await db.collection('journal').add({...entry,createdAt:firebase.firestore.FieldValue.serverTimestamp()});JOURNAL.unshift({id:ref.id,...entry});buildJournal();renderAdmin('journal');showToast('Memory saved ♡');}catch(e){showToast('Could not save — try again');console.error(e);}}
-
-async function delJournal(i){const item=JOURNAL[i];if(item?.id){try{await db.collection('journal').doc(item.id).delete();}catch(e){console.error(e);}}JOURNAL.splice(i,1);buildJournal();renderAdmin('journal');}
-
-async function saveFT(){const id=activeFTTab;if(id==='music'){FT_DATA.music.song=document.getElementById('ftSong')?.value||'';FT_DATA.music.artist=document.getElementById('ftArtist')?.value||'';FT_DATA.music.ytUrl=document.getElementById('ftYt')?.value||'';FT_DATA.music.note=document.getElementById('ftNote')?.value||'';}else if(id==='quote'){FT_DATA.quote.text=document.getElementById('ftQuote')?.value||'';FT_DATA.quote.author=document.getElementById('ftAuthor')?.value||'';}else{if(document.getElementById('ftTitle'))FT_DATA[id].title=document.getElementById('ftTitle').value;if(document.getElementById('ftCaption'))FT_DATA[id].caption=document.getElementById('ftCaption').value;}try{await db.collection('settings').doc('favouriteThings').set(FT_DATA);if(activeFT>=0){const prev=activeFT;activeFT=-1;setTimeout(()=>selectFT(prev),50);}renderAdmin('favthings');showToast('Saved ♡');}catch(e){showToast('Could not save — try again');console.error(e);}}
-
-async function uploadFTPhoto(input,id){const file=input.files[0];if(!file)return;showToast('Uploading...');try{const url=await uploadToCloudinary(file,'favourites');FT_DATA[id].src=url;await db.collection('settings').doc('favouriteThings').set(FT_DATA);if(activeFT>=0)selectFT(-1);renderAdmin('favthings');showToast('Photo saved ♡');}catch(e){showToast('Upload failed — try again');console.error(e);}}
-
-async function addPersonPhoto(input){const file=input.files[0];if(!file)return;showToast('Uploading...');try{const url=await uploadToCloudinary(file,'people');pendingPersonPhoto=url;const p=document.getElementById('pPhotoPreview');if(p){p.style.display='block';p.style.backgroundImage=`url('${url}')`;}showToast('Photo ready ♡');}catch(e){showToast('Upload failed — try again');console.error(e);}}
-
-async function addPerson(){const n=document.getElementById('pName')?.value.trim(),r=document.getElementById('pRel')?.value.trim(),note=document.getElementById('pNote')?.value.trim();if(!n||!r)return;FT_DATA.people.push({name:n,rel:r,note:note||'',src:pendingPersonPhoto});pendingPersonPhoto=null;try{await db.collection('settings').doc('favouriteThings').set(FT_DATA);if(activeFT>=0)selectFT(activeFT);renderAdmin('favthings');showToast('Person added ♡');}catch(e){showToast('Could not save — try again');console.error(e);}}
-
-async function delPerson(i){FT_DATA.people.splice(i,1);try{await db.collection('settings').doc('favouriteThings').set(FT_DATA);if(activeFT>=0)selectFT(activeFT);renderAdmin('favthings');}catch(e){console.error(e);}}
-
-async function saveLetter(){const v=document.getElementById('letterEdit')?.value;if(v){LETTER_TEXT=v;try{await db.collection('settings').doc('letter').set({text:v});const s=document.getElementById('letterSaved');if(s){s.style.display='block';setTimeout(()=>s.style.display='none',2500);}showToast('Letter saved ♡');}catch(e){showToast('Could not save — try again');console.error(e);}}}
-
-async function delWish(i){const item=WISHES[i];if(item?.id){try{await db.collection('wishes').doc(item.id).delete();}catch(e){console.error(e);}}WISHES.splice(i,1);buildWishes();renderAdmin('wishes');}
-
+// ── Load all data from Truehost on page start ──────────────────
 async function loadAllData(){
   try{
-    const[heroDoc,letterDoc,ftDoc]=await Promise.all([db.collection('settings').doc('hero').get(),db.collection('settings').doc('letter').get(),db.collection('settings').doc('favouriteThings').get()]);
-    if(heroDoc.exists&&heroDoc.data().url){HERO_SRC=heroDoc.data().url;const bg=document.getElementById('heroBg');if(bg){bg.style.backgroundImage=`url('${HERO_SRC}')`;bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';}const fr=document.getElementById('heroFrame');if(fr)fr.style.opacity='0';}
-    if(letterDoc.exists&&letterDoc.data().text)LETTER_TEXT=letterDoc.data().text;
-    if(ftDoc.exists&&ftDoc.data())FT_DATA={...FT_DATA,...ftDoc.data()};
-    const[gallSnap,milSnap,jSnap]=await Promise.all([db.collection('gallery').orderBy('createdAt','asc').get(),db.collection('milestones').orderBy('order','asc').get(),db.collection('journal').orderBy('createdAt','desc').get()]);
-    if(gallSnap.docs.length>0)GALL=gallSnap.docs.map(d=>({id:d.id,...d.data()}));
-    if(milSnap.docs.length>0)MIL=milSnap.docs.map(d=>({id:d.id,...d.data()}));
-    if(jSnap.docs.length>0)JOURNAL=jSnap.docs.map(d=>({id:d.id,...d.data()}));
-    buildGallery();buildMilestones();buildFT();buildJTabs();buildJournal();
-  }catch(e){console.error('Firebase:',e);buildGallery();buildMilestones();buildFT();buildJTabs();buildJournal();}
+    const[sR,gR,mR,jR,wR]=await Promise.all([
+      api('settings.php?key=all'),
+      api('gallery.php'),
+      api('milestones.php'),
+      api('journal.php'),
+      api('wishes.php')
+    ]);
+    // Settings
+    if(sR.success&&sR.settings){
+      const s=sR.settings;
+      if(s.hero_url){
+        HERO_SRC=s.hero_url;
+        const bg=document.getElementById('heroBg');
+        if(bg){bg.style.backgroundImage=`url('${HERO_SRC}')`;bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';}
+        const fr=document.getElementById('heroFrame');if(fr)fr.style.opacity='0';
+      }
+      if(s.letter_text)LETTER_TEXT=s.letter_text;
+      ['food','music','time','season','place','quote','activity'].forEach(k=>{
+        if(s['fav_'+k])FT_DATA[k]={...FT_DATA[k],...s['fav_'+k]};
+      });
+      if(s.fav_people&&Array.isArray(s.fav_people))FT_DATA.people=s.fav_people;
+    }
+    // Gallery
+    if(gR.success&&gR.gallery&&gR.gallery.length>0){
+      GALL=gR.gallery.map(g=>({id:g.id,src:g.url,cap:g.caption,h:parseInt(g.height)||190,bg:null,ic:''}));
+    }
+    // Milestones
+    if(mR.success&&mR.milestones&&mR.milestones.length>0){
+      MIL=mR.milestones.map(m=>({id:m.id,ic:m.icon,t:m.title,y:m.year_range,d:m.description}));
+    }
+    // Journal
+    if(jR.success&&jR.journal&&jR.journal.length>0){
+      JOURNAL=jR.journal.map(j=>({id:j.id,cat:j.category,date:j.entry_date,title:j.title,text:j.body}));
+    }
+    // Wishes
+    if(wR.success&&wR.wishes&&wR.wishes.length>0){
+      WISHES=wR.wishes.map(w=>({id:w.id,name:w.name,rel:w.rel,msg:w.msg}));
+    }
+    buildGallery();buildMilestones();buildFT();buildWishes();buildJTabs();buildJournal();
+    const wb=document.getElementById('wishBadge');if(wb)wb.textContent=WISHES.length;
+  }catch(e){
+    console.error('API load:',e);
+    buildGallery();buildMilestones();buildFT();buildWishes();buildJTabs();buildJournal();
+  }
+}
+
+// ── Submit wish (public — no admin pwd) ────────────────────────
+async function submitWish(){
+  const n=document.getElementById('wName').value.trim(),r=document.getElementById('wRel').value,m=document.getElementById('wMsg').value.trim();
+  if(!n||!r||!m)return;
+  try{
+    const d=await api('wishes.php','POST',{name:n,rel:r,msg:m});
+    if(d.success){
+      WISHES.unshift({id:d.id,name:n,rel:r,msg:m});buildWishes();
+      document.getElementById('wName').value='';document.getElementById('wRel').value='';document.getElementById('wMsg').value='';
+      const s=document.getElementById('wishSuccess');s.style.display='block';setTimeout(()=>s.style.display='none',4000);
+      const wb=document.getElementById('wishBadge');if(wb)wb.textContent=WISHES.length;
+    }else{showToast(d.error||'Could not send');}
+  }catch(e){showToast('Could not send — try again');console.error(e);}
+}
+
+// ── Hero photo → upload → save URL in settings ─────────────────
+async function uploadHero(input){
+  const file=input.files[0];if(!file)return;showToast('Uploading...');
+  try{
+    const url=await uploadPhoto(file,'hero');
+    HERO_SRC=url;
+    await api('settings.php','POST',{key:'hero_url',value:url,admin_pwd:APWD});
+    const bg=document.getElementById('heroBg');
+    if(bg){bg.style.backgroundImage=`url('${url}')`;bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';}
+    const fr=document.getElementById('heroFrame');if(fr)fr.style.opacity='0';
+    renderAdmin('hero');showToast('Hero photo updated ♡');
+  }catch(e){showToast('Upload failed — try again');console.error(e);}
+}
+
+// ── Gallery: add photo ─────────────────────────────────────────
+async function addGalleryPhoto(input){
+  const cap=document.getElementById('newGallCap')?.value.trim()||'My photo';
+  const file=input.files[0];if(!file)return;showToast('Uploading photo...');
+  try{
+    const url=await uploadPhoto(file,'gallery');
+    const d=await api('gallery.php','POST',{url:url,caption:cap,height:190,admin_pwd:APWD});
+    if(d.success){GALL.push({id:d.id,src:url,cap:cap,h:190,bg:null,ic:''});buildGallery();renderAdmin('gallery');showToast('Photo added ♡');}
+  }catch(e){showToast('Upload failed — try again');console.error(e);}
+}
+
+// ── Gallery: delete ────────────────────────────────────────────
+async function deleteGallItem(i){
+  if(GALL.length<=1)return;
+  const item=GALL[i];
+  if(item?.id){
+    try{await fetch(API+'gallery.php?id='+item.id,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({admin_pwd:APWD})});}catch(e){console.error(e);}
+  }
+  GALL.splice(i,1);buildGallery();renderAdmin('gallery');
+}
+
+// ── Milestones: add ────────────────────────────────────────────
+async function addMilestone(){
+  const ic=document.getElementById('mIcon')?.value.trim()||'✦',t=document.getElementById('mTitle')?.value.trim(),y=document.getElementById('mYear')?.value.trim(),d=document.getElementById('mDesc')?.value.trim();
+  if(!t)return;
+  try{
+    const r=await api('milestones.php','POST',{icon:ic,title:t,year:y||'',desc:d||'',admin_pwd:APWD});
+    if(r.success){MIL.push({id:r.id,ic,t,y:y||'',d:d||''});buildMilestones();renderAdmin('milestones');showToast('Milestone added ♡');}
+  }catch(e){showToast('Could not save');console.error(e);}
+}
+
+// ── Milestones: delete ─────────────────────────────────────────
+async function delMilestone(i){
+  const item=MIL[i];
+  if(item?.id){try{await fetch(API+'milestones.php?id='+item.id,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({admin_pwd:APWD})});}catch(e){console.error(e);}}
+  MIL.splice(i,1);buildMilestones();renderAdmin('milestones');
+}
+
+// ── Journal: add ───────────────────────────────────────────────
+async function addJournal(){
+  const title=document.getElementById('jTitleA')?.value.trim(),text=document.getElementById('jTextA')?.value.trim(),cat=document.getElementById('jCatA')?.value,date=document.getElementById('jDateA')?.value.trim();
+  if(!title||!text)return;
+  const entry={cat,date:date||new Date().toLocaleDateString('en-KE',{month:'long',year:'numeric'}),title,text};
+  try{
+    const r=await api('journal.php','POST',{title,body:text,category:cat,date:entry.date,admin_pwd:APWD});
+    if(r.success){JOURNAL.unshift({id:r.id,...entry});buildJournal();renderAdmin('journal');showToast('Memory saved ♡');}
+  }catch(e){showToast('Could not save');console.error(e);}
+}
+
+// ── Journal: delete ────────────────────────────────────────────
+async function delJournal(i){
+  const item=JOURNAL[i];
+  if(item?.id){try{await fetch(API+'journal.php?id='+item.id,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({admin_pwd:APWD})});}catch(e){console.error(e);}}
+  JOURNAL.splice(i,1);buildJournal();renderAdmin('journal');
+}
+
+// ── Favourite Things: save ─────────────────────────────────────
+async function saveFT(){
+  const id=activeFTTab;
+  if(id==='music'){FT_DATA.music.song=document.getElementById('ftSong')?.value||'';FT_DATA.music.artist=document.getElementById('ftArtist')?.value||'';FT_DATA.music.ytUrl=document.getElementById('ftYt')?.value||'';FT_DATA.music.note=document.getElementById('ftNote')?.value||'';}
+  else if(id==='quote'){FT_DATA.quote.text=document.getElementById('ftQuote')?.value||'';FT_DATA.quote.author=document.getElementById('ftAuthor')?.value||'';}
+  else{if(document.getElementById('ftTitle'))FT_DATA[id].title=document.getElementById('ftTitle').value;if(document.getElementById('ftCaption'))FT_DATA[id].caption=document.getElementById('ftCaption').value;}
+  try{
+    await api('settings.php','POST',{key:'fav_'+id,value:FT_DATA[id],admin_pwd:APWD});
+    if(activeFT>=0){const prev=activeFT;activeFT=-1;setTimeout(()=>selectFT(prev),50);}
+    renderAdmin('favthings');showToast('Saved ♡');
+  }catch(e){showToast('Could not save');console.error(e);}
+}
+
+// ── Favourite Things: upload photo ─────────────────────────────
+async function uploadFTPhoto(input,id){
+  const file=input.files[0];if(!file)return;showToast('Uploading...');
+  try{
+    const url=await uploadPhoto(file,'favourites');
+    FT_DATA[id].src=url;
+    await api('settings.php','POST',{key:'fav_'+id,value:FT_DATA[id],admin_pwd:APWD});
+    if(activeFT>=0)selectFT(-1);renderAdmin('favthings');showToast('Photo saved ♡');
+  }catch(e){showToast('Upload failed');console.error(e);}
+}
+
+// ── Person photo → upload ──────────────────────────────────────
+async function addPersonPhoto(input){
+  const file=input.files[0];if(!file)return;showToast('Uploading...');
+  try{
+    const url=await uploadPhoto(file,'people');
+    pendingPersonPhoto=url;
+    const p=document.getElementById('pPhotoPreview');
+    if(p){p.style.display='block';p.style.backgroundImage=`url('${url}')`;}
+    showToast('Photo ready ♡');
+  }catch(e){showToast('Upload failed');console.error(e);}
+}
+
+// ── Person: add ────────────────────────────────────────────────
+async function addPerson(){
+  const n=document.getElementById('pName')?.value.trim(),r=document.getElementById('pRel')?.value.trim(),note=document.getElementById('pNote')?.value.trim();
+  if(!n||!r)return;
+  FT_DATA.people.push({name:n,rel:r,note:note||'',src:pendingPersonPhoto});
+  pendingPersonPhoto=null;
+  try{
+    await api('settings.php','POST',{key:'fav_people',value:FT_DATA.people,admin_pwd:APWD});
+    if(activeFT>=0)selectFT(activeFT);renderAdmin('favthings');showToast('Person added ♡');
+  }catch(e){showToast('Could not save');console.error(e);}
+}
+
+// ── Person: delete ─────────────────────────────────────────────
+async function delPerson(i){
+  FT_DATA.people.splice(i,1);
+  try{
+    await api('settings.php','POST',{key:'fav_people',value:FT_DATA.people,admin_pwd:APWD});
+    if(activeFT>=0)selectFT(activeFT);renderAdmin('favthings');
+  }catch(e){console.error(e);}
+}
+
+// ── Letter: save ───────────────────────────────────────────────
+async function saveLetter(){
+  const v=document.getElementById('letterEdit')?.value;
+  if(v){LETTER_TEXT=v;
+    try{
+      await api('settings.php','POST',{key:'letter_text',value:v,admin_pwd:APWD});
+      const s=document.getElementById('letterSaved');
+      if(s){s.style.display='block';setTimeout(()=>s.style.display='none',2500);}
+      showToast('Letter saved ♡');
+    }catch(e){showToast('Could not save');console.error(e);}
+  }
+}
+
+// ── Wish: delete (admin) ───────────────────────────────────────
+async function delWish(i){
+  const item=WISHES[i];
+  if(item?.id){try{await fetch(API+'wishes.php?id='+item.id,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({admin_pwd:APWD})});}catch(e){console.error(e);}}
+  WISHES.splice(i,1);buildWishes();renderAdmin('wishes');
 }
 // ════════════════════════════════════════════════════════════════
 
